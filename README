@@ -41,6 +41,23 @@ Layout
 </html>
 
 
+Environment.rb
+==============
+config.time_zone = 'UTC'
+
+config.action_controller.session = {
+  :session_key => '_sandbox_session',
+  :secret      => 'fbfad820c6dbaeea4cc474f9babc71901467363036209252dc0314cb041a4ed1b04f7f4d5d16ff748ae135033848188de6bba2d129a04c4e6e6321b0391166a9'
+}
+
+
+Routes.rb
+=========
+map.resources :users
+map.resources :users
+map.resources :events
+
+
 Example
 =======
 
