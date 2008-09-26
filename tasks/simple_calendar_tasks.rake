@@ -21,14 +21,16 @@ namespace :simple_calendar do
 
   desc 'Uninstalls all public files associated with simple_calendar'
   task :uninstall do
-    puts "REMOVING /public/javascripts/jqModal.js"
-    FileUtils.rm RAILS_ROOT + '/public/javascripts/jqModal.js'
-    puts "REMOVING /public/javascripts/jquery.js"
-    FileUtils.rm RAILS_ROOT + '/public/javascripts/jquery.js'
-    puts "REMOVING /public/stylesheets/jqModal.css"
-    FileUtils.rm RAILS_ROOT + '/public/stylesheets/jqModal.css'
-    puts "REMOVING /public/stylesheets/simple_calendar.css"
-    FileUtils.rm RAILS_ROOT + '/public/stylesheets/simple_calendar.css'
+    FileList[PLUGIN_ROOT + '/public/javascripts/*.js'].each do |file|
+      file = File.basename(file)
+      puts "REMOVING /public/javascripts/" + file
+      FileUtils.rm RAILS_ROOT + '/public/javascripts/' + file
+    end
+    FileList[PLUGIN_ROOT + '/public/stylesheets/*.css'].each do |file|
+      file = File.basename(file)
+      puts "REMOVING /public/stylesheets/" + file
+      FileUtils.rm RAILS_ROOT + '/public/stylesheets/' + file
+    end
     FileList[PLUGIN_ROOT + '/public/images/*'].each do |image|
       image = File.basename(image)
       puts "REMOVING /public/images/" + image
