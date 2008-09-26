@@ -1,0 +1,20 @@
+<% %>
+<div id="tabs">
+  <ul>
+    <li <%= @mode == "day" ? ' class="selected"' : ' class="unselected"' %>>
+       <% if @mode == "day" %>
+         <%= tab("Day") %>
+       <% else %>
+         <%= tab_link("Day") %>
+       <% end %>
+    </li>
+    <li <%= @mode != "day" ? ' class="selected"' : ' class="unselected"' %>>
+       <% if @mode != "day" %>
+         <%= tab("Month") %> 
+       <% else %>
+         <%= tab_link("Month") %>
+       <% end %>
+    </li>  
+  </ul>
+</div>
+

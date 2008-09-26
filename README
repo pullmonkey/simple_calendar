@@ -1,0 +1,51 @@
+SimpleCalendar
+==============
+
+This is the Simple Calendar Plugin.
+You can easily add calendar items for any day and then view it in month view or day view.
+
+
+Layout
+======
+<html>
+<head>
+  <title>Calendar Development</title>
+  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag 'simple_calendar' %>
+</head>
+<body>
+  <% if flash[:error] -%>
+    <div id="flash_error">
+      <%= h flash[:error] %>
+    </div>
+      <%= javascript_tag(visual_effect(:highlight, "error", :duration => 1.5)) %>
+    <br />
+  <% end -%>
+  <% if flash[:warning] -%>
+    <div id="flash_warning">
+      <%= h flash[:warning] %>
+    </div>
+      <%= javascript_tag(visual_effect(:highlight, "warning", :duration => 1.5)) %>
+    <br />
+  <% end -%>
+  <% if flash[:notice] -%>
+    <div id="flash_notice">
+      <%= h flash[:notice] %>
+    </div>
+      <%= javascript_tag(visual_effect(:highlight, "notice", :duration => 1.5)) %>
+    <br />
+  <% end -%>
+
+  <%= yeild %>
+</body>
+</html>
+
+
+Example
+=======
+
+Put this in your view wherever you want the simple calendar to show up:
+
+  <%= render :simple_calendar => "test" %>
+
+Copyright (c) 2008 [Sean Naegle], released under the MIT license

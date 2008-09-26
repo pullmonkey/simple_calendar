@@ -1,0 +1,16 @@
+<% %>
+<table class = "hours">
+  <% @hours.each do |hour| %>
+    <tr>
+      <th class = "top" style = "border-bottom: none;">
+        <%= hour %>
+      </th> 
+      <td width="100%" style = "border-bottom: 1px dotted #555555;"></td>
+    </tr>
+    <tr>
+      <th class = "bottom" style = "border-top: none;">&nbsp;
+      </th> 
+      <td style = "border-top: none;"></td>
+    </tr>
+  <% end %>
+</table>

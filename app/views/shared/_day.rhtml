@@ -1,0 +1,106 @@
+<% %>
+<% @hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', 
+            '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
+             -%>
+<% entries = @entries[Date.civil(@year, @month, @day)].sort{|a,b| a.start_time <=> b.start_time} -%>
+<%= javascript_include_tag 'jquery', 'jqModal' %>
+<%= stylesheet_link_tag 'jqModal', 'simple_calendar' %>
+<script language="javascript">
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+    $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry'});
+    $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'th.hour_header'});
+    // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
+    if($j.browser.msie) {
+      $j('div.jqmClose')
+      .hover(
+        function(){ $j(this).addClass('jqmCloseHover'); },
+        function(){ $j(this).removeClass('jqmCloseHover'); });
+    }
+  });
+</script>
+<div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
+<div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
+
+<table class="cal">
+  <tr>
+    <td class="filler" style="background-color: #800000; border: none;">&nbsp;</td>
+  </tr>
+  <tr>
+    <th style="border: none;"><%= @date.strftime('%A, %B') %> <%= @date.day %></th>
+  </tr>  
+</table>
+<div class="day_scroll">
+<table class="day_cal" style="width:100%">
+  <% @hours.each_with_index do |hour, i| %>
+    <tr class="week_days top">
+     <th class="hour_header" id="<%= home_path %>/simple_calendar_entries/new/<%= @year %>_<%= @month %>_<%= @day %>?hour=<%= i %>&mode=day">
+        <%= hour %>
+      </th>
+      <td width="95%" style="text-align: left; font-size: small;">
+        <table>
+        <tr>
+        <% if entries and !entries.empty? -%>
+          <% columns = 0 -%>
+          <% touching_entries = 0 -%>
+          <% entries.each do |entry| -%>
+            <% if entry.start_time.between?(some_time(@date, i, 00), some_time(@date, i, 29)) -%>
+              <% touching_entries = entry.all_touching(entries).size -%>
+              <td id="entry_<%= entry.id %>" class="day_entry" width="<%= (100 / (entry.all_touching(entries).size)).to_s %>%">
+                <%= entry.time %> - <%= entry.e_time %>
+                <%= link_to entry.name, simple_calendar_entry_path(entry) + "?mode=#{@mode}", {:class => 'entry'} %>
+                <!-- - -->
+                <% entry.detail %>
+              </td>
+              <% columns += 1 -%>
+            <% elsif some_time(@date, i, 01).between?(entry.start_time, entry.end_time) -%>
+              <td id="entry_<%= entry.id %>" class="day_entry" width="<%= (100 / (entry.all_touching(entries).size)).to_s %>%">
+                <b>_cont:</b> <%= entry.name %>
+              </td>
+              <% columns += 1 -%>
+            <% end -%>
+          <% end -%>
+          <% (columns..(touching_entries - 1)).each do -%>
+            <td width="<%= (100 / touching_entries).to_s if touching_entries != 0 %>%"></td>
+          <% end -%>
+        <% end -%>
+        </tr>
+        </table>
+      </td>
+    </tr>
+    <tr class="week_days bottom">
+      <th class="hour_header" id="<%= home_path %>/simple_calendar_entries/new/<%= @year %>_<%= @month %>_<%= @day %>?hour=<%= i %>&mode=day">&nbsp;</th>
+      <td width="95%" style="text-align: left; font-size: small;">
+        <table> 
+        <tr>
+        <% if entries and !entries.empty? -%>
+          <% columns = 0 -%>
+          <% touching_entries = 0 -%>
+          <% entries.each do |entry| -%>
+            <% if entry.start_time.between?(some_time(@date, i, 30), some_time(@date, i, 59)) -%>
+              <% touching_entries = entry.all_touching(entries).size -%>
+              <td id="entry_<%= entry.id %>" class="day_entry" width="<%= (100 / (entry.all_touching(entries).size)).to_s %>%">
+                <%= entry.time %> - <%= entry.e_time %>
+                <%= link_to entry.name, simple_calendar_entry_path(entry) + "?mode=#{@mode}", {:class => 'entry'} %>
+                <!-- - -->
+                <% entry.detail %>
+              </td>
+              <% columns += 1 -%>
+            <% elsif some_time(@date, i, 31).between?(entry.start_time, entry.end_time) -%>
+              <td id="entry_<%= entry.id %>" class="day_entry" width="<%= (100 / (entry.all_touching(entries).size)).to_s %>%">
+                <b>_cont:</b> <%= entry.name %>
+              </td>
+              <% columns += 1 -%>
+            <% end -%>
+          <% end -%>
+          <% (columns..(touching_entries - 1)).each do -%>
+            <td width="<%= (100 / touching_entries).to_s if touching_entries != 0 %>%"></td>
+          <% end -%>
+        <% end -%>
+        </tr>
+        </table>
+      </td>
+    </tr>
+  <% end %>
+</table>
+</div>

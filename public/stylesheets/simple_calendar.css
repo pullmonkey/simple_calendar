@@ -1,0 +1,402 @@
+a.jqmClose em{display:none;}
+a.jqmClose {
+  width:20px;
+  height:20px;
+  display:block;
+  float:right;
+  clear:right;
+  background:transparent url(../images/close_icon_double.png) 0 0 no-repeat;
+}
+
+a.jqmClose:hover, a.jqmCloseHover{ background-position: 0 -20px; }
+
+div#calendar_modal h1 {
+  padding: 0px;
+  margin: 0px;
+}
+
+table.simple_calendar_border {
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #800000;
+  width: 90%;
+}
+
+table.simple_calendar_border tr{
+  padding: 0px;
+  margin: 0px;
+}
+
+table.simple_calendar_border th{
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+table.simple_calendar_border table{
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+table.simple_calendar {
+  width: 100%;
+  padding: 5px;
+  border-collapse: collapse;
+}
+table.simple_calendar th {
+  width: 10%;
+  text-align: center;
+  border: 1px solid lightgrey;  
+  color: white;
+  background-color: #888;
+  font-family: arial;
+}
+table.simple_calendar td {
+  border: 1px solid lightgrey;  
+  vertical-align: top;
+  width: 10%;
+  height: 100px;
+}
+table.simple_calendar td.blank_day {
+  background-color: #bbb;
+}
+table.simple_calendar td.day {
+  background-color: white;
+}
+table.simple_calendar td.selected {
+  background-color: #FFF8DC;
+}
+table.simple_calendar td div.day {
+  width: 100%;
+  text-align: right;
+  border-bottom: 1px solid lightgrey;
+  background-color: mistyRose;
+  color: black;
+  cursor: pointer;
+  cursor: hand;
+}
+
+table.simple_calendar div.time_entry {
+  margin-right: 15px;
+  padding-top: 0px;
+  font-size: 9px;
+  color: black;
+}
+
+table.simple_calendar div.time_entry {
+  float: left;
+}
+
+table.simple_calendar div.time_entry a:hover {
+  color: red;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: transparent;
+}
+
+a.entry_2, a.entry_3{
+  color: blue;
+}
+
+a:hover.entry_2, a:hover.entry_3 {
+  color: red;
+}
+
+table.table_border {
+  width:70%;
+  padding: 0px;
+  border: none;
+  background-color: #800000;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+table.cal, table.day_cal {
+  border-collapse: collapse;
+  background-color: white;
+}
+
+table.cal {
+  width: 95%;
+}
+
+table.cal th, table.day_cal th {
+  text-align: center;
+  background-color: #999999;
+  color: white;
+  padding: 5px;
+  font-size: 16px;
+  font-family: arial;
+  border: none;
+}
+
+table.day_cal th {
+  border:1px solid lightgrey;
+}
+
+table.cal td, table.day_cal td {
+  text-align: right;
+  vertical-align: top;
+  border:1px solid lightgrey;
+  color: black;
+  font-size: 16px;
+}
+
+table.day_cal {
+  width:100%;
+}
+
+div.day_scroll {
+  height:650px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:0px;
+  width:95%;
+}
+
+tr.month{
+  text-align:center;
+}
+
+table.hours {
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-collapse: collapse;
+}
+
+table.hours td {
+  border: 1px solid #333333;
+}
+
+table.hours th {
+  border: 1px solid #333333;
+  border-right: 3px double #333333;
+  font-size: 11px;
+}
+
+th.hour_header {
+  cursor: pointer;
+  cursor: hand;
+}
+
+a.day_link, a:hover.day_link {
+  color: #333333;
+  background-color: transparent;
+}
+select.month option{
+  font-size: 18px;
+}
+
+a.day_next, a:hover.day_next {
+  color: #CCCCCC;
+  background-color: transparent;
+}
+
+tr.filler {
+  background-color: #CC0000;
+  border: none;
+}
+
+
+#tabs {
+  padding: 0px 40px;
+  margin-left: 700px;
+  font-weight: bold;
+  height: 2.09em;
+  font: bold 96% arial;
+}
+
+#tabs ul {
+  list-style: none;
+}
+
+#tabs li {
+  background: #979797;
+  float: left;
+  display:block;
+  border-right: 3px solid #fff;
+  padding:0;
+}
+
+#tabs li.unselected {
+  border-bottom: 3px solid #979797;
+}
+
+#tabs li.selected {
+  background-color: #AA4444;
+  border-bottom: 3px solid #AA4444;
+  color: white;
+}
+
+#tabs a, #tabs a:link, #tabs a:visited, #tabs a:hover, #tabs a:active {
+  text-decoration:none;
+  cursor:pointer;
+  color:white;
+  display: block;
+  padding:0;
+  border: none;
+}
+
+#tabs a:hover {
+  color:#9ed3f8;
+  background-color: transparent;
+  border:none;
+  color: #333333;
+}
+
+#tabs img {
+  border: none;
+  padding: none;
+}
+
+td.no_border{
+  border: none;
+}
+
+tr.week_days th{
+  background-color: mistyRose;
+  color: #666666;
+  font-size: 12px;
+}
+
+td.day_entry {
+  background: lightblue;
+  text-align: left;
+}
+
+tr.top th{
+  border-bottom: none;
+}
+
+tr.bottom th{
+  border-top: none;
+}
+
+tr.top td{
+  border-bottom: none;
+}
+
+tr.bottom td{
+  border-top: 1px dotted lightgrey;
+}
+
+td.today{
+  background-color: #FFE4E1;
+  border: 3px double salmon;
+}
+
+table.tab {
+  background-color: #999999;
+}
+
+table.tab_active {
+  background-color: #AA4444;
+}
+
+table.tab_active td.left_tab_border{
+  border-left: 1px solid #AA4444;
+}
+
+table.tab_active td.right_tab_border{
+  border-right: 1px solid #AA4444;
+}
+
+table.tab_active td.top_tab_border {
+  border-top: 1px solid #AA4444;
+}
+
+p.left-align{
+  text-align: left;
+}
+div#flash_error {
+  background-color:red;
+  border:1px solid;
+  float:right;
+  margin-bottom:3px;
+  padding:5px;
+}
+div#flash_notice {
+  background-color:lightblue;
+  border:1px solid;
+  clear:both;
+  float:right;
+  padding:5px;
+}
+div#flash_warning {
+  background-color:lightgreen;
+  border:1px solid;
+  clear:both;
+  float:right;
+  margin-bottom:3px;
+  padding:5px;
+}
+/*div#flash_error {
+  border: 2px solid #fcc;
+  background-color: #fee;
+  padding: 10px;
+  font-size: 130%;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+div#flash_notice {
+  border: 2px solid #cfc;
+  background-color: #efe;
+  padding: 10px;
+  font-size: 130%;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}*/
+/* FORMS - ERRORS */
+.fieldWithErrors {
+  padding: 2px;
+  border: 4px solid #c13737;
+  display: table;
+}
+div.fielderror {
+  border: 1px solid red;
+  padding: 0px;
+  margin: 0px
+}
+td.fielderror {
+  border: 1px solid red;
+}
+textarea.fielderror {
+  border: 1px solid red;
+}
+#errorExplanation {
+  width: 400px;
+  border: 2px solid #c13737;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+div#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 15px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+div#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+div#errorExplanation ul li {
+  font-size: 12px;
+  list-style: none;
+}
+

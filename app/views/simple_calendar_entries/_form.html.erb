@@ -1,0 +1,13 @@
+<% %>
+<a href="#" class="jqmClose"><em>Close</em></a>
+<% title = controller.action_name == 'edit' ? "Edit calendar entry" : "Add an entry to the calendar" %>
+<%= error_messages_for :simple_calendar_entry %>
+<h2><%= title %></h2>
+<% form_for @simple_calendar_entry, :builder => SimpleCalendarFormBuilder do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_area :detail, :rows => 5 %>
+  <%= f.datetime_select :start_time %>
+  <%= f.datetime_select :end_time %>
+  <%= f.hidden_field :mode, :value => @mode %>
+  <%= button_image("Submit") %>
+<% end -%>
