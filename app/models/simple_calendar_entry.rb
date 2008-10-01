@@ -42,8 +42,12 @@ class SimpleCalendarEntry < ActiveRecord::Base
   def span
     time = end_time.minus_with_duration(start_time)
     time = time.to_i / 60
-    width = time / 30
-    return width
+    if (time / 30.0).to_f > (time / 30).to_i 
+      s = (time / 30).to_i + 1
+    else
+      s = time / 30
+    end
+    return s
   end
 
   def date
