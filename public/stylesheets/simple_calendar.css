@@ -142,7 +142,7 @@ table.day_cal th {
 }
 
 table.cal td, table.day_cal td {
-  text-align: right;
+  /*text-align: right;*/
   vertical-align: top;
   border:1px solid lightgrey;
   color: black;
@@ -261,15 +261,23 @@ td.no_border{
   border: none;
 }
 
+tr.week_days {
+  height: 25px;
+}
+
 tr.week_days th{
   background-color: mistyRose;
   color: #666666;
   font-size: 12px;
 }
 
-td.day_entry {
+table.day_cal td.day_entry {
+  /*position: relative;*/
   background: lightblue;
   text-align: left;
+  font-size: small;
+  margin: 0 5px 5px 0;
+  border: 2px solid black;
 }
 
 tr.top th{
@@ -338,24 +346,7 @@ div#flash_warning {
   margin-bottom:3px;
   padding:5px;
 }
-/*div#flash_error {
-  border: 2px solid #fcc;
-  background-color: #fee;
-  padding: 10px;
-  font-size: 130%;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 5px;
-}
-div#flash_notice {
-  border: 2px solid #cfc;
-  background-color: #efe;
-  padding: 10px;
-  font-size: 130%;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 5px;
-}*/
+
 /* FORMS - ERRORS */
 .fieldWithErrors {
   padding: 2px;
