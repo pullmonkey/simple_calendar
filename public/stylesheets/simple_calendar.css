@@ -93,6 +93,18 @@ table.simple_calendar div.time_entry a:hover {
   color: red;
 }
 
+table.simple_calendar div.more_link {
+  float: left;
+  margin-right: 15px;
+  padding-top: 0px;
+  font-size: 12px;
+  color: black;
+}
+
+table.simple_calendar div.more_link a:hover {
+  color: red;
+}
+
 a {
   text-decoration: none;
 }
@@ -110,7 +122,7 @@ a:hover.entry_2, a:hover.entry_3 {
 }
 
 table.table_border {
-  width:70%;
+  width:90%;
   padding: 0px;
   border: none;
   background-color: #800000;
@@ -208,9 +220,9 @@ tr.filler {
 
 #tabs {
   padding: 0px 40px;
-  margin-left: 700px;
+  /*margin-left: 700px;*/
   font-weight: bold;
-  height: 2.09em;
+  /*height: 2.09em;*/
   font: bold 96% arial;
 }
 
@@ -324,6 +336,11 @@ table.tab_active td.top_tab_border {
 p.left-align{
   text-align: left;
 }
+
+div.jpmPopup b {
+  color: black
+}
+
 div#flash_error {
   background-color:red;
   border:1px solid;
@@ -345,6 +362,25 @@ div#flash_warning {
   float:right;
   margin-bottom:3px;
   padding:5px;
+}
+
+/* FORMS */
+div.iqmWindow {
+  font-size: 125%;
+}
+
+div.jqmWindow label {
+  display: inline;
+  padding: 0px;
+}
+
+div.jqmWindow b {
+  color: black;
+}
+
+div.jqmWindow textarea {
+  height: 90px;
+  width: 300px;
 }
 
 /* FORMS - ERRORS */
