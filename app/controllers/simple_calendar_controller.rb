@@ -1,4 +1,8 @@
 class SimpleCalendarController < ApplicationController
+  # For Rails version 2.0 to 2.1
+  #self.view_paths << File.join(File.dirname(__FILE__), '..', 'views')
+  # For Rails versions less than 2.0
+  #self.template_root = File.join(File.dirname(__FILE__), '..', 'views')
 
   def index
   end
