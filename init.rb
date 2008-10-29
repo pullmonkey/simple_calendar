@@ -22,9 +22,11 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 
 model_path      = File.join(directory, 'app', 'models')
 $LOAD_PATH << model_path
-Dependencies.load_paths << model_path
+Dependencies.load_paths << model_path #use in less than rails 2.1.1
+#ActiveSupport::Dependencies.load_paths << model_path #use in rails 2.1.1 and greater
 
 controller_path = File.join(directory, 'app', 'controllers')
 $LOAD_PATH << controller_path
-Dependencies.load_paths << controller_path
+Dependencies.load_paths << controller_path #use in less than rails 2.1.1
+#ActiveSupport::Dependencies.load_paths << controller_path #use in rails 2.1.1 and greater
 config.controller_paths << controller_path
