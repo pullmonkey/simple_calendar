@@ -2,8 +2,7 @@ class SimpleCalendarMigrationsGenerator < Rails::Generator::Base
 	def manifest
 		record do |m|
       @migration_directory = "#{RAILS_ROOT}/db/migrate"
-      %w{create_sessions 
-         create_simple_calendars
+      %w{create_simple_calendars
          create_simple_calendar_entries
          }.each do |x|
            if migration_exists?("#{x}").empty?

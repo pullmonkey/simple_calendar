@@ -1,12 +1,13 @@
 class <%= class_name %> < ActiveRecord::Migration
   def self.up
     create_table :simple_calendar_entries do |t|
-      t.references :simple_calendar
-      t.string :name
-      t.text :detail
-      t.datetime :start_time
-      t.datetime :end_time
-      t.timestamps
+      t.column :simple_calendar_id, :integer, :limit => 11
+      t.column :name,       :string
+      t.column :detail,     :text
+      t.column :start_time, :datetime
+      t.column :end_time,   :datetime
+      t.column :created_at, :datetime
+      t.column :updated_at, :datetime
     end
   end
 
