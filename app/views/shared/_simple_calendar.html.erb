@@ -6,7 +6,9 @@
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry'});
-    $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry'});
+    if(<%= @admin %>) {
+      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry'});
+    }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
       $j('div.jqmClose')
@@ -41,15 +43,23 @@
     <% end -%>
     <% @days.times do |day| -%>
       <td class="day<%= " selected" if day + 1 == @day and @month == Time.now.month and @year == Time.now.year -%>">
-        <%= link_to "<div class='day'>#{day + 1}</div>", {:controller => 'simple_calendar', :action => 'day_view', :date => (Date.new(@year, @month, day + 1))}  %>
-        <div class='new_entry' style="height:100%;width:100%;" id="<%= home_path %>/simple_calendar_entries/new/<%= @year %>_<%= @month %>_<%= day + 1 %>">
+        <%= link_to "<div class='day'>#{day + 1}</div>", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
+      <div class='new_entry' style="height:100%;width:100%;" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, day + 1) %>">
         <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
-          <% entries.each do |entry| -%>
-            <div class="time_entry">
-              <%= entry.time -%>
-              <%= link_to entry.name, simple_calendar_entry_path(entry), {:class => 'entry'} -%>
-            </div>
-            <br clear="all" />
+          <% entries.each_with_index do |entry, x| -%>
+            <% if x < 4 -%>
+              <div class="time_entry">
+                <%= entry.time -%>
+                <%= link_to entry.name, simple_calendar_entry_path(entry), {:class => 'entry'} -%>
+              </div>
+              <br clear="all" />
+            <% end -%>
+            <% if x == 4 -%>
+              <div class="more_link">
+                <%= link_to "more...", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
+              </div>
+              <br clear="all">
+            <% end -%>
           <% end -%>
         <% end -%>
         </div>
