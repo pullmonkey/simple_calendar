@@ -2,17 +2,17 @@
 <div id="tabs">
   <ul>
     <li <%= @mode == "day" ? ' class="selected"' : ' class="unselected"' %>>
-       <% if @mode == "day" %>
-         <%= tab("Day") %>
-       <% else %>
-         <%= tab_link("Day") %>
-       <% end %>
+      <% if @mode == "day" %>
+        <%= tab("Day") %>
+      <% else %>
+        <%= link_to tab("Day"), "#{home_path}/simple_calendar/day_view?date=#{@date}" %>
+      <% end %>
     </li>
     <li <%= @mode != "day" ? ' class="selected"' : ' class="unselected"' %>>
        <% if @mode != "day" %>
          <%= tab("Month") %> 
        <% else %>
-         <%= tab_link("Month") %>
+        <%= link_to tab("Month"), "#{home_path}/simple_calendar/month_view?date=#{@date}" %>
        <% end %>
     </li>  
   </ul>
