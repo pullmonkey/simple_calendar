@@ -3,6 +3,8 @@ SimpleCalendar
 
 This is the Simple Calendar Plugin.
 You can easily add calendar items for any day and then view it in month view or day view.
+Install with:
+  ruby script/plugin install http://svn.pullmonkey.com/plugins/trunk/simple_calendar
 
 
 Install
