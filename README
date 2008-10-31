@@ -18,6 +18,16 @@ If you want to remove these files use:
   rake simple_calendar:uninstall
 
 
+Migrations
+==========
+To generate migrations use:
+  ruby script/generate simple_calendar_migrations
+
+This should create 2 migration files:
+  - 01_create_simple_calendars.rb
+  - 02_create_simple_calendar_entries.rb
+
+
 Layout
 ======
 <html>
