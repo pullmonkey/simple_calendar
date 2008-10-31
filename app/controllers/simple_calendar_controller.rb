@@ -9,13 +9,13 @@ class SimpleCalendarController < ApplicationController
   
   def refresh_month
     render :update do |page| 
-      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :layout => false, :month => params[:month], :year => params[:year]
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin], :layout => false, :month => params[:month], :year => params[:year]
     end
   end
 
   def refresh_year
     render :update do |page|
-      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :layout => false, :year => params[:year], :month => params[:month]
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin], :layout => false, :year => params[:year], :month => params[:month]
     end
   end
 
@@ -37,7 +37,7 @@ class SimpleCalendarController < ApplicationController
     @mode  = 'month'
     if !params[:date].nil?
       @date  = params[:date].to_date
-      @day   = Time.now.day
+      @day   = 1
       @month = @date.month
       @year  = @date.year
     else 
