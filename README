@@ -5,13 +5,25 @@ This is the Simple Calendar Plugin.
 You can easily add calendar items for any day and then view it in month view or day view.
 
 
+Install
+=======
+For this pugin you will need several javascript, stylesheet, and image files.
+These files should be installed automatically on installation. If not then you
+can use the rake command to install them.
+
+To install these files use:
+  rake simple_calendar:install
+
+If you want to remove these files use:
+  rake simple_calendar:uninstall
+
+
 Layout
 ======
 <html>
 <head>
   <title>Calendar Development</title>
   <%= javascript_include_tag :defaults %>
-  <%= stylesheet_link_tag 'simple_calendar' %>
 </head>
 <body>
   <% if flash[:error] -%>
@@ -45,18 +57,6 @@ Environment.rb
 ==============
 config.time_zone = 'UTC'
 
-config.action_controller.session = {
-  :session_key => '_sandbox_session',
-  :secret      => 'fbfad820c6dbaeea4cc474f9babc71901467363036209252dc0314cb041a4ed1b04f7f4d5d16ff748ae135033848188de6bba2d129a04c4e6e6321b0391166a9'
-}
-
-
-Routes.rb
-=========
-map.resources :users
-map.resources :users
-map.resources :events
-
 
 Example
 =======
@@ -64,5 +64,20 @@ Example
 Put this in your view wherever you want the simple calendar to show up:
 
   <%= render :simple_calendar => "test" %>
+
+The additional options you can pass to simple_calendar are:
+  :admin => true/false - This decides whether you can edit the calendar or not
+                       - defaults to false
+  :prefix => "/test" - This is whatever the prefix for you site is
+                     - defaults to ""
+  :return_to => "/projects/test_project" - This is the path in front of simple_calendar/
+                                         - defaults to ""
+  :mode => "month" - This is the starting mode you want the calendar to be in
+                   - defaults to "month"
+  :date => "2008-10-29".to_date - Passes the starting date
+                                - defaults to Date.today
+  :year => 2008 - If you don't pass a date then you can pass year seperately
+  :month => 10 - If you don't pass a date then you can pass month seperately
+  :day => 29 - If you don't pass a date then you can pass day seperately
 
 Copyright (c) 2008 [Sean Naegle], released under the MIT license
