@@ -40,18 +40,12 @@ ActionView::Base.class_eval do
     @mode  = options[:mode] || 'month'
     @layout = options.has_key?(:layout) ? options[:layout] : true
     @date  = Date.today 
-    if !params[:date].nil?
-      @year, @month, @day = params[:date].to_s.split("-")
-      @year = @year.to_i
-      @month = @month.to_i
-      @day = @mode == 'month' ? @date.day.to_i : @day.to_i
-    else
-      @day   = (options[:day]   || @date.day).to_i
-      @year  = (options[:year]  || @date.year).to_i
-      @month = (options[:month] || @date.month).to_i
-    end
-    @date  = Date.new(@year, @month, @day)
+    @date = params[:date].to_date if !params[:date].nil?
+    @year  = (options[:year]  || @date.year).to_i
+    @month = (options[:month] || @date.month).to_i
     @days  = Time.days_in_month(@month, @year)    
+    @day = @mode == 'month' ? 1 : @date.day
+    @date  = Date.new(@year, @month, @day)
 
     @first_week_day = (@date - @date.day.days + 1.day).wday
     @calendar_path = options[:return_to] || session[:simple_calendar_path] || ""
