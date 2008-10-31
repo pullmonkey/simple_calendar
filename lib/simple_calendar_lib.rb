@@ -52,7 +52,6 @@ ActionView::Base.class_eval do
     end
     @date  = Date.new(@year, @month, @day)
     @days  = Time.days_in_month(@month, @year)    
-    #@base  = options[:base]
 
     @first_week_day = (@date - @date.day.days + 1.day).wday
     @calendar_path = options[:return_to] || session[:simple_calendar_path] || ""
