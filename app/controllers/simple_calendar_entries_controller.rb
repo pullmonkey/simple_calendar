@@ -70,6 +70,7 @@ class SimpleCalendarEntriesController < ApplicationController
 
   def delete
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
+    @mode = params[:mode] ? params[:mode] : "month"
     if @admin
       @confirm = "Are you sure you want to delete this entry"
       @simple_calendar_entry.destroy ?

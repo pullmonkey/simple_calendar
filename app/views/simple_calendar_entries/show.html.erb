@@ -20,6 +20,6 @@
 <p class="left-align"><b>Details:</b> <%= @simple_calendar_entry.date_time %></p><br />
 <% if @admin -%>
   <%= link_to "Edit event details", edit_simple_calendar_entry_path(@simple_calendar_entry) + "?mode=#{@mode}", {:class => 'entry_2'} %> | 
-  <%= link_to "Delete event", {:action => 'delete', :id => (params[:id])}, {:confirm => "Are you sure you want to delete this event?", :class => 'entry_3'} %>
+  <%= link_to "Delete event", {:action => 'delete', :id => params[:id], :mode => @mode}, {:confirm => "Are you sure you want to delete this event?", :class => 'entry_3'} %>
 <% end -%>
 </div>
