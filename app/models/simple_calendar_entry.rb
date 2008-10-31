@@ -8,8 +8,7 @@ class SimpleCalendarEntry < ActiveRecord::Base
               lambda{|month, year| {
                 :conditions => ["start_time >= ? and start_time <= ?", 
                                 Date.civil(year, month, 1),
-                                Date.civil(year, month, 
-                                           Time.days_in_month(month, year))]
+                                Date.civil(year, month + 1, 1)] 
               }}
   def end_time_after_start_time
     if end_time < start_time
