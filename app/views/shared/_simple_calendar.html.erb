@@ -42,10 +42,11 @@
       <td class="blank_day"></td>
     <% end -%>
     <% @days.times do |day| -%>
-      <td class="day<%= " selected" if day + 1 == @day and @month == Time.now.month and @year == Time.now.year -%>">
+      <td class="day<%= " selected" if day + 1 == Date.today.day and @month == Date.today.month and @year == Date.today.year -%>">
         <%= link_to "<div class='day'>#{day + 1}</div>", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
       <div class='new_entry' style="height:100%;width:100%;" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, day + 1) %>">
         <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
+          <% entries.sort!{|a,b| a.start_time <=> b.start_time} -%>
           <% entries.each_with_index do |entry, x| -%>
             <% if x < 4 -%>
               <div class="time_entry">
