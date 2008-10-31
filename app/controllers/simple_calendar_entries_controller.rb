@@ -19,6 +19,7 @@ class SimpleCalendarEntriesController < ApplicationController
     else
       @date += 6.hours
     end
+    @date += params[:mins].to_i.minutes if params[:mins]
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.new(:start_time => @date.to_time, :end_time => @date.to_time + 1.hour)
     render :partial => 'form'
   end
