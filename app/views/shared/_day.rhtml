@@ -13,6 +13,7 @@
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry'});
     if(<%= @admin %>) {
       $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'th.hour_header'});
+      $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'td.link_to_new'});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
@@ -25,6 +26,7 @@
 </script>
 <div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
+<div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
 
 <table class="cal">
   <tr>
@@ -55,10 +57,10 @@
           <% end -%>
         <% end -%>
       <% end -%>
-      <td width="100%" colspan="11"></td>
+      <td class="link_to_new" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mode=day" width="100%" colspan="11"></td>
     </tr>
     <tr class="week_days bottom">
-      <th class="hour_header" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mode=day">&nbsp;</th>
+      <th class="hour_header" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mins=30&mode=day">&nbsp;</th>
       <% if entries and !entries.empty? -%>
         <% entries.each do |entry| -%>
           <% if entry.start_time.between?(some_time(@date, i, 30), some_time(@date, i, 59)) -%>
@@ -73,7 +75,7 @@
           <% end -%>
         <% end -%>
       <% end -%>
-      <td width="100%" colspan="11"></td>
+      <td class="link_to_new" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mins=30&mode=day" width="100%" colspan="11"></td>
     </tr>
   <% end %>
 </table>
