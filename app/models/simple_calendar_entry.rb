@@ -35,7 +35,27 @@ class SimpleCalendarEntry < ActiveRecord::Base
   end
 
   def all_touching(entries)
-    entries.select{|i| i.touching?(self)}# - [self]
+    touching_entries = entries.select{|i| i.touching?(self)} - [self]
+    logger.error "*********************************************************************************"
+    logger.error "entry being tested: " + self.name
+    logger.error "\ntouching_entries at start: " + touching_entries.map{|e| e.name}.inspect
+    if touching_entries and touching_entries.size > 1
+      touching_entries.each do |entry|
+        if touching_entries and touching_entries.size > 1
+          not_touching = true
+          touching_entries.each do |blah|
+            if !(entry == blah)
+              not_touching = false if blah.touching?(entry)
+            end
+          end
+        end
+        logger.error "\nnot touching: #{not_touching}"
+        touching_entries = touching_entries - [entry] if not_touching
+      end
+    end
+    logger.error "\ntouching_entries: " + touching_entries.map{|e| e.name}.inspect
+    logger.error "*********************************************************************************"
+    return touching_entries + [self]
   end
 
   def span
