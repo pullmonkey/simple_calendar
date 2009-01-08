@@ -1,0 +1,153 @@
+table.simple_calendar_border {
+  background-color: #800000;
+}
+table.simple_calendar_border th{
+  color: white;
+}
+table.simple_calendar th {
+  color: white;
+  background-color: #800000;
+}
+table.simple_calendar td {
+  border: 1px solid lightgrey;  
+}
+table.simple_calendar td.blank_day {
+  background-color: #bbb;
+}
+table.simple_calendar td.day {
+  background-color: white;
+}
+table.simple_calendar td.selected {
+  background-color: #FFF8DC;
+}
+table.simple_calendar td div.day {
+  border-bottom: 1px solid lightgrey;
+  background-color: mistyRose;
+  color: black;
+}
+table.simple_calendar div.time_entry {
+  color: black;
+}
+table.simple_calendar div.time_entry a:hover {
+  color: red;
+}
+table.simple_calendar div.more_link {
+  color: black;
+}
+table.simple_calendar div.more_link a:hover {
+  color: red;
+}
+a:hover {
+  background-color: transparent;
+}
+a.entry_2, a.entry_3{
+  color: blue;
+}
+a:hover.entry_2, a:hover.entry_3 {
+  color: red;
+}
+div.table_border {
+  background-color: #800000;
+}
+table.cal, table.day_cal {
+  background-color: white;
+}
+table.cal th, table.day_cal th {
+  background-color: #999999;
+  color: white;
+}
+table.day_cal th {
+  border:1px solid lightgrey;
+}
+table.cal td, table.day_cal td {
+  border:1px solid lightgrey;
+  color: black;
+}
+table.hours {
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+}
+table.hours td {
+  border: 1px solid #333333;
+}
+table.hours th {
+  border: 1px solid #333333;
+  border-right: 3px double #333333;
+}
+a.day_link, a:hover.day_link {
+  color: #333333;
+  background-color: transparent;
+}
+a.day_next, a:hover.day_next {
+  color: #CCCCCC;
+  background-color: transparent;
+}
+#tabs li {
+  background: #979797;
+  border-right: 3px solid #fff;
+}
+#tabs li.unselected {
+  border-bottom: 3px solid #979797;
+}
+#tabs li.selected {
+  background-color: #AA4444;
+  border-bottom: 3px solid #AA4444;
+  color: white;
+}
+#tabs a, #tabs a:link, #tabs a:visited, #tabs a:hover, #tabs a:active {
+  color:white;
+}
+#tabs a:hover {
+  color: #9ed3f8;
+  background-color: transparent;
+  color: #333333;
+}
+tr.week_days th{
+  background-color: mistyRose;
+  color: #666666;
+}
+table.day_cal td.day_entry {
+  background: lightblue;
+  border: 2px solid black;
+}
+tr.bottom td{
+  border-top: 1px dotted lightgrey;
+}
+td.today{
+  background-color: #FFE4E1;
+  border: 3px double salmon;
+}
+
+/* FORMS */
+div.jqmWindow b {
+  color: black;
+}
+div.jpmPopup b {
+  color: black
+}
+
+/* FORMS - ERRORS */
+.fieldWithErrors {
+  border: 4px solid #c13737;
+}
+div.fielderror {
+  border: 1px solid red;
+}
+td.fielderror {
+  border: 1px solid red;
+}
+textarea.fielderror {
+  border: 1px solid red;
+}
+#errorExplanation {
+  border: 2px solid #c13737;
+  background-color: #f0f0f0;
+}
+div#errorExplanation h2 {
+  background-color: #c00;
+  color: #fff;
+}
+div#errorExplanation p {
+  color: #333;
+}
