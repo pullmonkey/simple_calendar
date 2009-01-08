@@ -21,7 +21,7 @@ class SimpleCalendarEntriesController < ApplicationController
     end
     @date += params[:mins].to_i.minutes if params[:mins]
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.new(:start_time => @date.to_time, :end_time => @date.to_time + 1.hour)
-    render :partial => 'form'
+    render :partial => 'form', :layout => false
   end
 
   def create
@@ -51,7 +51,7 @@ class SimpleCalendarEntriesController < ApplicationController
       redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
       return
     end
-    render :partial => 'form'
+    render :partial => 'form', :layout => false
   end
 
   def update
