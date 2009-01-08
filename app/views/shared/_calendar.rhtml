@@ -1,13 +1,13 @@
 <% %>
 <%= javascript_include_tag 'nifty' %>
-<%= stylesheet_link_tag 'niftyCorners', 'simple_calendar_gold' %>
+<%= stylesheet_link_tag 'niftyCorners', 'simple_calendar', 'simple_calendar_red' %>
 <script type="text/javascript">
   window.onload = function() {
     if(!NiftyCheck())
       return;
-    Rounded("div#calendar","all","#FFF","#BEC67C","smooth");
-    Rounded("li#active_tab","top","#FFF","#CCCC00","smooth");
-    Rounded("li#tab","top","#FFF","#999999","smooth");
+    Rounded("div#calendar","all","#FFF",$('calendar').getStyle('background-color'),"smooth");
+    Rounded("li#active_tab","top","#FFF",$('active_tab').getStyle('background-color'),"smooth");
+    Rounded("li#tab","top","#FFF",$('tab').getStyle('background-color'),"smooth");
   }
 </script>
 <table width="100%" cellpadding="0" cellspacing="0">

@@ -6,7 +6,7 @@
 <% entries.sort!{|a,b| a.start_time <=> b.start_time} if entries and !entries.empty? -%>
 <% entries.sort!{|a,b| a.end_time <=> b.end_time} if entries and !entries.empty? -%>
 <%= javascript_include_tag 'jquery', 'jqModal' %>
-<%= stylesheet_link_tag 'jqModal', 'simple_calendar_gold' %>
+<%= stylesheet_link_tag 'jqModal' %>
 <script language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
