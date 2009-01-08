@@ -8,8 +8,9 @@ class SimpleCalendarEntry < ActiveRecord::Base
               lambda{|month, year| {
                 :conditions => ["start_time >= ? and start_time <= ?", 
                                 Date.civil(year, month, 1),
-                                Date.civil(year, month + 1, 1)] 
+                                Date.civil(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1)] 
               }}
+
   def end_time_after_start_time
     if end_time < start_time
       errors.add_to_base("The start time can't be later than the end time.")
@@ -36,9 +37,9 @@ class SimpleCalendarEntry < ActiveRecord::Base
 
   def all_touching(entries)
     touching_entries = entries.select{|i| i.touching?(self)} - [self]
-    logger.error "*********************************************************************************"
-    logger.error "entry being tested: " + self.name
-    logger.error "\ntouching_entries at start: " + touching_entries.map{|e| e.name}.inspect
+    #logger.error "*********************************************************************************"
+    #logger.error "entry being tested: " + self.name
+    #logger.error "\ntouching_entries at start: " + touching_entries.map{|e| e.name}.inspect
     if touching_entries and touching_entries.size > 1
       touching_entries.each do |entry|
         if touching_entries and touching_entries.size > 1
@@ -49,12 +50,12 @@ class SimpleCalendarEntry < ActiveRecord::Base
             end
           end
         end
-        logger.error "\nnot touching: #{not_touching}"
+        #logger.error "\nnot touching: #{not_touching}"
         touching_entries = touching_entries - [entry] if not_touching
       end
     end
-    logger.error "\ntouching_entries: " + touching_entries.map{|e| e.name}.inspect
-    logger.error "*********************************************************************************"
+    #logger.error "\ntouching_entries: " + touching_entries.map{|e| e.name}.inspect
+    #logger.error "*********************************************************************************"
     return touching_entries + [self]
   end
 
@@ -80,4 +81,5 @@ class SimpleCalendarEntry < ActiveRecord::Base
   def e_time
     end_time.to_s(:just_time)
   end
+
 end
