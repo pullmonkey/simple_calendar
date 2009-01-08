@@ -1,4 +1,15 @@
 <% %>
+<%= javascript_include_tag 'nifty' %>
+<%= stylesheet_link_tag 'niftyCorners', 'simple_calendar_gold' %>
+<script type="text/javascript">
+  window.onload = function() {
+    if(!NiftyCheck())
+      return;
+    Rounded("div#calendar","all","#FFF","#BEC67C","smooth");
+    Rounded("li#active_tab","top","#FFF","#CCCC00","smooth");
+    Rounded("li#tab","top","#FFF","#999999","smooth");
+  }
+</script>
 <table width="100%" cellpadding="0" cellspacing="0">
   <tr valign="bottom">
     <td width="25%">&nbsp;</td>
@@ -8,33 +19,17 @@
   </tr>
   <tr>
     <td colspan="4">
-      <table class= "table_border" id="calendar" cellpadding="0" cellspacing="0">
-        <tr>
-          <td><%= image_tag 'top_left.png', :width => "14", :height => "14", :border => "0" %></td>
-          <td width="100%"></td>
-          <td><%= image_tag 'top_right.png', :width => "14", :height => "14", :border => "0" %></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td align="center">
-            <div id="inner_calendar">
-              <% mode = controller.action_name == 'day_view' ? 'day' : 'month' %>
-              <%= render :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin],
-                                                                             :layout => false, 
-                                                                             :mode   => @mode, 
-                                                                             :day    => @day, 
-                                                                             :month  => @month, 
-                                                                             :year   => @year %>
-            </div>
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><%= image_tag 'bottom_left.png', :width => "14", :height => "14", :border => "0" %></td>
-          <td></td>
-          <td><%= image_tag 'bottom_right.png', :width => "14", :height => "14", :border => "0" %></td>
-        </tr>
-      </table>
+      <div class="table_border" id="calendar" cellpadding="0" cellspacing="0">
+        <div id="inner_calendar" align="center">
+          <% mode = controller.action_name == 'day_view' ? 'day' : 'month' %>
+          <%= render :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin],
+                                                                         :layout => false, 
+                                                                         :mode   => @mode, 
+                                                                         :day    => @day, 
+                                                                         :month  => @month, 
+                                                                         :year   => @year %>
+        </div>
+      </div>
     </td>
   </tr>
 </table>

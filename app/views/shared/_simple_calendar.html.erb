@@ -1,13 +1,12 @@
 <% %>
-<div id = "inner_calendar" >
 <%= javascript_include_tag 'jquery', 'jqModal' %>
-<%= stylesheet_link_tag 'jqModal', 'simple_calendar' %>
+<%= stylesheet_link_tag 'jqModal' %>
 <script language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
-    $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry'});
+    $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
     if(<%= @admin %>) {
-      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry'});
+      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry', toTop: true});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
@@ -20,61 +19,63 @@
 </script>
 <div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
-  <table class="simple_calendar">
-    <tr colspan="7">
-      <th colspan="7" style="border: none; background-color: #800000;">
-        <%= select_month(@date, {}, {:onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_month'},
-                                                                          :with => "'month='+this.value+'&year='+$('date_year').value")}"})%> 
-        <%= select_year( @date, {}, {:onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_year'},
-                                                                            :with => "'year='+this.value+'&month='+$('date_month').value")}"})%>
-      </th>
-    </tr>
-    <tr>
-      <td style="height:15px; border: none;" colspan="7"></td>
-    </tr>
-    <tr>
-      <% Date::DAYNAMES.each do |day| -%>
-        <th><%= day -%></th>
-      <% end -%>
-    </tr>
-    <tr>
-    <% @first_week_day.times do |blank_day| -%>
-      <td class="blank_day"></td>
+<table class="simple_calendar">
+  <tr colspan="7">
+    <th colspan="7"> <!--style="border: none; background-color: #800000;"-->
+      <%= select_month(@date, {}, {:id => "date_month",
+                                   :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_month'},
+                                                                        :with => "'month='+this.value+'&year='+$('date_year').value")}"})%> 
+      <%= select_year( @date, {}, {:id => "date_year",
+                                   :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_year'},
+                                                                          :with => "'year='+this.value+'&month='+$('date_month').value")}"})%>
+    </th>
+  </tr>
+  <tr>
+    <td style="height:15px; border: none;" colspan="7"></td>
+  </tr>
+  <tr>
+    <% Date::DAYNAMES.each do |day| -%>
+      <th><%= day -%></th>
     <% end -%>
-    <% @days.times do |day| -%>
-      <td class="day<%= " selected" if day + 1 == Date.today.day and @month == Date.today.month and @year == Date.today.year -%>">
-        <%= link_to "<div class='day'>#{day + 1}</div>", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
-      <div class='new_entry' style="height:100%;width:100%;" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, day + 1) %>">
-        <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
-          <% entries.sort!{|a,b| a.start_time <=> b.start_time} -%>
-          <% entries.each_with_index do |entry, x| -%>
-            <% if x < 4 -%>
-              <div class="time_entry">
-                <%= entry.time -%>
-                <%= link_to entry.name, simple_calendar_entry_path(entry), {:class => 'entry'} -%>
-              </div>
-              <br clear="all" />
-            <% end -%>
-            <% if x == 4 -%>
-              <div class="more_link">
-                more...
-              </div>
-              <br clear="all">
-            <% end -%>
+  </tr>
+  <tr>
+  <% @first_week_day.times do |blank_day| -%>
+    <td class="blank_day"></td>
+  <% end -%>
+  <% @days.times do |day| -%>
+    <td class="day<%= " selected" if day + 1 == Date.today.day and @month == Date.today.month and @year == Date.today.year -%>">
+      <% logger.error "HOME PATH: #{home_path}" %>
+      <%= link_to "<div class='day'>#{day + 1}</div>", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
+    <div class='new_entry' style="height:100%;width:100%;" id="<%= "#{home_path}#{new_simple_calendar_entry_path}" %>/<%= Date.new(@year, @month, day + 1) %>">
+      <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
+        <% entries.sort!{|a,b| a.start_time <=> b.start_time} -%>
+        <% entries.each_with_index do |entry, x| -%>
+          <% if x < 4 -%>
+            <div class="time_entry">
+              <%= entry.time -%>
+              <%= link_to entry.name, "#{home_path}/simple_calendar_entries/show/#{entry.id}", {:class => 'entry'} -%>
+            </div>
+            <br clear="all" />
+          <% end -%>
+          <% if x == 4 -%>
+            <div class="more_link">
+              more...
+            </div>
+            <br clear="all">
           <% end -%>
         <% end -%>
-        </div>
-      </td>
-      <% if day + 1 < @days and day.modulo(7) == 6 - @first_week_day -%>
-        </tr><tr>
       <% end -%>
+      </div>
+    </td>
+    <% if day + 1 < @days and day.modulo(7) == 6 - @first_week_day -%>
+      </tr><tr>
     <% end -%>
-    <% @last_day = (@first_week_day + (@days.modulo(7))).modulo(7) %>
-    <% if @last_day != 0 %>
-        <%  (7 - @last_day).times do |blank_day| %>
-           <td class="blank_day"></td>
-        <%  end -%>
-    <% end -%>
-    </tr>
-  </table>
-</div>
+  <% end -%>
+  <% @last_day = (@first_week_day + (@days.modulo(7))).modulo(7) %>
+  <% if @last_day != 0 %>
+      <%  (7 - @last_day).times do |blank_day| %>
+         <td class="blank_day"></td>
+      <%  end -%>
+  <% end -%>
+  </tr>
+</table>

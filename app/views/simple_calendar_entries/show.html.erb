@@ -2,7 +2,7 @@
 <script language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
-    $j('#calendar_modal_3').jqm({ajax: '@href', trigger: 'a.entry_2'});
+    $j('#calendar_modal_3').jqm({ajax: '@href', trigger: 'a.entry_2', toTop: true, onShow: function(){$j('#calendar_modal').jqmHide();$j('#calendar_modal_3').show();}});
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
       $j('div.jqmClose')
@@ -14,12 +14,14 @@
 </script>
 <div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
 <div id='view_entry' class="jqmPopup">
-<a href="#" class="jqmClose"><em>Close</em></a>
+<a href="" class="jqmClose"><em>Close</em></a>
 <h1><%= @simple_calendar_entry.name %></h1><br />
 <p class="left-align"><b>Description:</b> <%= @simple_calendar_entry.detail %></p>
 <p class="left-align"><b>Details:</b> <%= @simple_calendar_entry.date_time %></p><br />
 <% if @admin -%>
-  <%= link_to "Edit event details", edit_simple_calendar_entry_path(@simple_calendar_entry) + "?mode=#{@mode}", {:class => 'entry_2'} %> | 
-  <%= link_to "Delete event", {:action => 'delete', :id => params[:id], :mode => @mode}, {:confirm => "Are you sure you want to delete this event?", :class => 'entry_3'} %>
+  <p style="text-align: center;">
+    <%= link_to "Edit event details", edit_simple_calendar_entry_path(@simple_calendar_entry) + "?mode=#{@mode}", {:class => 'entry_2'} %> | 
+    <%= link_to "Delete event", {:action => 'delete', :id => params[:id], :mode => @mode}, {:confirm => "Are you sure you want to delete this event?", :class => 'entry_3'} %>
+  </p>
 <% end -%>
 </div>

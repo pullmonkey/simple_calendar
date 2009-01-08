@@ -6,14 +6,14 @@
 <% entries.sort!{|a,b| a.start_time <=> b.start_time} if entries and !entries.empty? -%>
 <% entries.sort!{|a,b| a.end_time <=> b.end_time} if entries and !entries.empty? -%>
 <%= javascript_include_tag 'jquery', 'jqModal' %>
-<%= stylesheet_link_tag 'jqModal', 'simple_calendar' %>
+<%= stylesheet_link_tag 'jqModal', 'simple_calendar_gold' %>
 <script language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
-    $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry'});
+    $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
     if(<%= @admin %>) {
-      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'th.hour_header'});
-      $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'td.link_to_new'});
+      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'th.hour_header', toTop: true});
+      $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'td.link_to_new', toTop: true});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
@@ -30,7 +30,7 @@
 
 <table class="cal">
   <tr>
-    <td class="filler" style="background-color: #800000; border: none;">&nbsp;</td>
+    <td class="filler"><!-- style="background-color: #800000; border: none;"-->&nbsp;</td>
   </tr>
   <tr>
     <th style="border: none;"><%= @date.strftime('%A, %B') %> <%= @date.day %></th>
@@ -40,7 +40,7 @@
 <table id="day_cal_table" class="day_cal" style="width:100%">
   <% @hours.each_with_index do |hour, i| %>
     <tr class="week_days top">
-     <th class="hour_header" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mode=day">
+     <th class="hour_header" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>">
         <%= hour %>
       </th>
       <% if entries and !entries.empty? -%>
@@ -57,10 +57,10 @@
           <% end -%>
         <% end -%>
       <% end -%>
-      <td class="link_to_new" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mode=day" width="100%" colspan="11"></td>
+      <td class="link_to_new" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>" width="100%" colspan="11"></td>
     </tr>
     <tr class="week_days bottom">
-      <th class="hour_header" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mins=30&mode=day">&nbsp;</th>
+      <th class="hour_header" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>&mins=30">&nbsp;</th>
       <% if entries and !entries.empty? -%>
         <% entries.each do |entry| -%>
           <% if entry.start_time.between?(some_time(@date, i, 30), some_time(@date, i, 59)) -%>
@@ -75,7 +75,7 @@
           <% end -%>
         <% end -%>
       <% end -%>
-      <td class="link_to_new" id="<%= new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?hour=<%= i %>&mins=30&mode=day" width="100%" colspan="11"></td>
+      <td class="link_to_new" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>&mins=30" width="100%" colspan="11"></td>
     </tr>
   <% end %>
 </table>
