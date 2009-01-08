@@ -38,6 +38,9 @@ table.simple_calendar div.more_link {
 table.simple_calendar div.more_link a:hover {
   color: red;
 }
+a:hover {
+  background-color: transparent;
+}
 a.entry_2, a.entry_3{
   color: blue;
 }
