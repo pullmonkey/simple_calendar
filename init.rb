@@ -1,4 +1,5 @@
 # Include hook code here
+require 'application'
 require 'simple_calendar_lib'
 require File.join(directory, 'app', 'helpers') + "/simple_calendar_helper"
 require File.join(directory, 'app', 'helpers') + "/simple_calendar_entries_helper"
@@ -6,6 +7,7 @@ require File.join(directory, 'app', 'helpers') + "/simple_calendar_entries_helpe
 ActionView::Base.send :include, SimpleCalendarHelper
 ActionView::Base.send :include, SimpleCalendarEntriesHelper
 
+ApplicationController.send :include, SimpleCalendarMod::ViewPaths
 
 class << ActionController::Routing::Routes;self;end.class_eval do
   # dont clear the existing routes when setting up new routes
@@ -14,6 +16,7 @@ end
 
 ActionController::Routing::Routes.draw do |map|
   map.resources 'simple_calendar_entries'
+  #map.admin_simple_calendar "/admin/simple_calendar_entries/:action", :controller => 'admin/simple_calendar_entries'
 end
 
 ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(

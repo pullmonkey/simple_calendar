@@ -14,10 +14,13 @@ class SimpleCalendarFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 end
- 
-ActionController::Base.class_eval do
-  # For Rails versions greater than 2.1 
-  self.append_view_path File.join(File.dirname(__FILE__), '..', 'app', 'views')
+
+module SimpleCalendarMod
+  module ViewPaths
+    def self.included(klas)
+      klas.append_view_path File.join(File.dirname(__FILE__), '..', 'app', 'views')
+    end
+  end
 end
 
 ActionView::Base.class_eval do
