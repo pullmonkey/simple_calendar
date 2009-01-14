@@ -6,8 +6,8 @@
 <% form_for @simple_calendar_entry, :builder => SimpleCalendarFormBuilder do |f| %>
   <%= f.text_field :name %>
   <%= f.text_area :detail, :rows => 5 %>
-  <%= f.datetime_select :start_time %>
-  <%= f.datetime_select :end_time %>
+  <%= f.datetime_select :start_time, {:minute_step => 15} %>
+  <%= f.datetime_select :end_time, {:minute_step => 15} %>
   <%= f.hidden_field :mode, :value => @mode %>
   <%= #button_image("Submit") 
   %>
