@@ -58,15 +58,17 @@ ActionView::Base.class_eval do
     session[:simple_calendar_path] = @calendar_path
     @entries = @simple_calendar.simple_calendar_entries.
                 all_by_month_and_year(@month, @year).
+                sort{|a,b| a.start_time <=> b.start_time}.
                 group_by(&:date)
 
     if @layout
       render :partial => 'shared/calendar'
     else
       if @mode == 'day'
+        @entries = @entries[Date.civil(@year, @month, @day)]
         render :partial => 'shared/day'
       else
-        render :partial => 'shared/simple_calendar'
+        render :partial => 'shared/month'
       end
     end
   end
