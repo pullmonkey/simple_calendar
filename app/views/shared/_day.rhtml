@@ -1,9 +1,4 @@
 <% -%>
-<% @hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', 
-            '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
-             -%>
-<% entries = @entries[Date.civil(@year, @month, @day)] -%>
-<% entries.sort!{|a,b| a.start_time <=> b.start_time} if entries and !entries.empty? -%>
 <%= javascript_include_tag 'jquery', 'jqModal' %>
 <%= stylesheet_link_tag 'jqModal' %>
 <script language="javascript">
@@ -11,8 +6,7 @@
   $j(document).ready(function() {
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
     if(<%= @admin %>) {
-      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'th.hour_header', toTop: true});
-      $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'td.link_to_new', toTop: true});
+      $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'tr.week_days', toTop: true});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
@@ -25,7 +19,6 @@
 </script>
 <div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
-<div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
 
 <table class="cal">
   <tr>
@@ -37,24 +30,10 @@
 </table>
 <div class="day_scroll">
   <table id="day_cal_table" class="day_cal" style="width:100%">
-    <% @hours.each_with_index do |hour, i| %>
-      <tr class="week_days top" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i %>>
-       <th class="hour_header" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>">
-          <%= hour %>
-        </th>
-        <td class="link_to_new" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>" width="100%"></td>
-      </tr>
-      <tr class="week_days bottom" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i %>>
-        <th class="hour_header" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>&mins=30">&nbsp;</th>
-        <td class="link_to_new" id="<%= home_path + new_simple_calendar_entry_path %>/<%= Date.new(@year, @month, @day) %>?mode=day&hour=<%= i %>&mins=30" width="100%"></td>
-      </tr>
-    <% end %>
+    <%= render :partial => 'shared/hours' %>
   </table>
-  <% if entries and !entries.empty? -%>
-    <% entries.each do |entry| -%>
-      <% logger.error "Entry: #{entry.name}" %>
-      <% logger.error "ALL TOUCHING: #{entry.all_touching(entries).map{|e| [e.name, e.id] }}" %>
-      <% logger.error "Total Time: #{entry.total_time_minutes}\n\n" %>
+  <% if @entries and !@entries.empty? -%>
+    <% @entries.each do |entry| -%>
       <div id="entry_<%= entry.id %>" class="day_entry" 
            style="display: block; 
                   top: <%= entry.top %>pt;

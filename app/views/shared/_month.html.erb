@@ -21,7 +21,7 @@
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
 <table class="simple_calendar">
   <tr colspan="7">
-    <th colspan="7"> <!--style="border: none; background-color: #800000;"-->
+    <th colspan="7">
       <%= select_month(@date, {}, {:id => "date_month",
                                    :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_month'},
                                                                         :with => "'month='+this.value+'&year='+$('date_year').value")}"})%> 
@@ -44,38 +44,38 @@
   <% end -%>
   <% @days.times do |day| -%>
     <td class="day<%= " selected" if day + 1 == Date.today.day and @month == Date.today.month and @year == Date.today.year -%>">
-      <% logger.error "HOME PATH: #{home_path}" %>
-      <%= link_to "<div class='day'>#{day + 1}</div>", "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day + 1)}" %>
-    <div class='new_entry' style="height:100%;width:100%;" id="<%= "#{home_path}#{new_simple_calendar_entry_path}" %>/<%= Date.new(@year, @month, day + 1) %>">
-      <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
-        <% entries.sort!{|a,b| a.start_time <=> b.start_time} -%>
-        <% entries.each_with_index do |entry, x| -%>
-          <% if x < 4 -%>
-            <div class="time_entry">
-              <%= entry.time -%>
-              <%= link_to entry.name, "#{home_path}/simple_calendar_entries/show/#{entry.id}", {:class => 'entry'} -%>
-            </div>
-            <br clear="all" />
-          <% end -%>
-          <% if x == 4 -%>
-            <div class="more_link">
-              more...
-            </div>
-            <br clear="all">
+      <%= day_view_link(day + 1) %>
+      <div class='new_entry' id="<%= path_for_new_calendar_entry_month(day + 1) %>">
+        <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
+          <% entries.each_with_index do |entry, x| -%>
+            <% if x < 4 -%> <!-- only display 4 entries per day in the month view -->
+              <div class="time_entry">
+                <%= entry.time -%>
+                <%= link_to entry.name, simple_calendar_entry_path(entry), {:class => 'entry'} -%>
+              </div>
+              <br clear="all" />
+            <% end -%>
+            <% if x == 4 -%>
+              <div class="more_link">
+                <%= #link_to "more...", path_to_day_view(day + 1), {:class => 'more_link'} 
+                %>
+                more...
+              </div>
+              <br clear="all">
+            <% end -%>
           <% end -%>
         <% end -%>
-      <% end -%>
       </div>
     </td>
     <% if day + 1 < @days and day.modulo(7) == 6 - @first_week_day -%>
       </tr><tr>
     <% end -%>
   <% end -%>
-  <% @last_day = (@first_week_day + (@days.modulo(7))).modulo(7) %>
-  <% if @last_day != 0 %>
-      <%  (7 - @last_day).times do |blank_day| %>
-         <td class="blank_day"></td>
-      <%  end -%>
+  <% last_day = (@first_week_day + (@days.modulo(7))).modulo(7) %>
+  <% if last_day != 0 %>
+    <% (7 - last_day).times do |blank_day| %>
+      <td class="blank_day"></td>
+    <%  end -%>
   <% end -%>
   </tr>
 </table>

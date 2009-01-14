@@ -6,4 +6,19 @@ module SimpleCalendarHelper
     return "http://#{request.env['HTTP_HOST']}"
   end
 
+  def path_for_new_calendar_entry_day(hour, min)
+    "#{home_path}#{new_simple_calendar_entry_path}/#{Date.new(@year, @month, @day)}?mode=day&hour=#{hour}&mins=#{min}"
+  end
+
+  def path_for_new_calendar_entry_month(day)
+    "#{home_path}#{new_simple_calendar_entry_path}/#{Date.new(@year, @month, day)}"
+  end
+
+  def path_to_day_view(day)
+    "#{home_path}/simple_calendar/day_view?date=#{Date.new(@year, @month, day)}"
+  end
+
+  def day_view_link(day)
+    link_to "<div class='day'>#{day}</div>", path_to_day_view(day)
+  end
 end
