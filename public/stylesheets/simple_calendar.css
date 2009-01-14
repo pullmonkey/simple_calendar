@@ -49,34 +49,23 @@ table.simple_calendar {
 table.simple_calendar th {
   width: 10%;
   text-align: center;
-  /*border: 1px solid lightgrey;*/
-  /*color: white;*/
   font-family: arial;
-  /*background-color: #BEC67C;*/
   border: none;
 }
 table.simple_calendar td {
-  /*border: 1px solid lightgrey;*/ 
   vertical-align: top;
   width: 10%;
   height: 100px;
 }
 table.simple_calendar td.blank_day {
-  /*background-color: #bbb;*/
 }
 table.simple_calendar td.day {
-  /*background-color: white;*/
 }
 table.simple_calendar td.selected {
-  /*background-color: #FFF8DC;*/
 }
 table.simple_calendar td div.day {
   width: 100%;
   text-align: right;
-  /*border-bottom: 1px solid lightgrey;*/
-  /*background-color: mistyRose;*/
-  /*background-color: #FFFFCC;*/
-  /*color: black;*/
   cursor: pointer;
   cursor: hand;
 }
@@ -85,16 +74,10 @@ table.simple_calendar div.time_entry {
   margin-right: 5px;
   padding-top: 0px;
   font-size: 9px;
-  /*color: black;*/
 }
 
 table.simple_calendar div.time_entry {
-  /*float: left;*/
   text-align: left;
-}
-
-table.simple_calendar div.time_entry a:hover {
-  /*color: red;*/
 }
 
 table.simple_calendar div.more_link {
@@ -152,8 +135,6 @@ table.cal {
 
 table.cal th, table.day_cal th {
   text-align: center;
-  background-color: #999999;
-  color: white;
   padding: 5px;
   font-size: 16px;
   font-family: arial;
@@ -177,6 +158,7 @@ table.day_cal {
 }
 
 div.day_scroll {
+  position: relative;
   height:650px;
   overflow-y:auto;
   overflow-x:hidden;
@@ -224,8 +206,6 @@ a.day_next, a:hover.day_next {
 }
 
 .filler {
-  /*background-color: #CC0000;*/
-  background-color: #BEC67C;
   border: none !important;
 }
 
@@ -296,19 +276,26 @@ tr.week_days {
 }
 
 tr.week_days th{
-  /*background-color: mistyRose;*/
-  background-color: #FFFFCC;
-  color: #666666;
   font-size: 12px;
+  width: 5%;
+  padding: 0;
+  text-align: center;
 }
 
-table.day_cal td.day_entry {
-  /*position: relative;*/
-  background: lightblue;
+div.day_entry {
+  position: absolute;
   text-align: left;
   font-size: small;
   margin: 0 5px 5px 0;
-  border: 2px solid black;
+  z-index: 2900;
+}
+
+tr.top {
+  height: 30pt;
+}
+
+tr.bottom {
+  height: 30pt;
 }
 
 tr.top th{

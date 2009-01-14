@@ -64,6 +64,10 @@ table.cal td, table.day_cal td {
   border:1px solid lightgrey;
   color: black;
 }
+div.day_entry {
+  background: lightblue;
+  border: 2px solid black;
+}
 table.hours {
   background-color: white;
   color: #333333;
