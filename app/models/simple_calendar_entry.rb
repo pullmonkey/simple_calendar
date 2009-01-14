@@ -4,6 +4,13 @@ class SimpleCalendarEntry < ActiveRecord::Base
   validates_presence_of :name, :message => "^You must enter a name first"
   validate :end_time_after_start_time
 
+  def sibling_entries(month, year)
+    self.simple_calendar.simple_calendar_entries.
+         all_by_month_and_year(month, year).
+         group_by(&:date).
+         sort!{|a,b| a.start_time <=> b.start_time}
+  end
+
   named_scope :all_by_month_and_year,
               lambda{|month, year| {
                 :conditions => ["start_time >= ? and start_time <= ?", 
@@ -59,16 +66,68 @@ class SimpleCalendarEntry < ActiveRecord::Base
     return touching_entries + [self]
   end
 
-  def span
-    time = end_time.minus_with_duration(start_time)
-    time = time.to_i / 60
-    if (time / 30.0).to_f > (time / 30).to_i 
-      s = (time / 30).to_i + 1
-    else
-      s = time / 30
+  def all_touching_max_and_min(entries)
+    logger.error "Entries in all_touching_max_and_min: " + entries.inspect
+    touching_entries = entries.select{|i| i.touching?(self)}
+    lcv = 0
+    max = [] 
+    min = touching_entries
+    while((self.start_time + lcv * 15) < self.end_time)
+      time = self.start_time + (lcv * 15).minutes
+      num = []
+      touching_entries.each do |entry|
+        num << entry if time.between?(entry.start_time, entry.end_time)
+      end
+      max = num if (num.size > max.size)
+      min = num if (num.size < min.size)
+      lcv += 1
     end
-    return s
+    return min, max 
   end
+
+  def top
+    self.start_time.hour * 60 + self.start_time.min
+  end
+
+  def height
+    self.total_time_minutes - 2
+  end
+
+  def width(day, month, year)
+    min, max = self.all_touching_max_and_min(sibling_entries(month, year)[Date.civil(year, month, day)])
+    (90 / max.size)
+  end
+
+  def left(day, month, year)
+    min, max = self.all_touching_max_and_min(sibling_entries(month, year)[Date.civil(year, month, day)])
+    left = 5
+    #index = sibling_entries(month, year)[Date.civil(year, month, day)].index(self)
+    index = max.index(self)
+    left += self.width(day, month, year) * index if index
+    left += index
+    return left
+  end
+
+#  def all_touching_ids(entries)
+#    t_entries = self.all_touching(entries)
+#    t_entries.delete(self)
+#    return t_entries.map{|e| e.id}
+#  end
+
+  def total_time_minutes
+    (end_time - start_time) / 60
+  end
+
+#  def span
+#    time = end_time.minus_with_duration(start_time)
+#    time = time.to_i / 60
+#    if (time / 30.0).to_f > (time / 30).to_i 
+#      s = (time / 30).to_i + 1
+#    else
+#      s = time / 30
+#    end
+#    return s
+#  end
 
   def date
     start_time.to_date
