@@ -100,19 +100,9 @@ a:hover {
   background-color: transparent;
 }
 
-a.entry_2, a.entry_3{
-  /*color: blue;*/
-}
-
-a:hover.entry_2, a:hover.entry_3 {
-  color: red;
-}
-
 div.table_border {
   width: 90%;
   padding: 0px;
-  /*background-color: #800000;*/
-  /*background-color: #BEC67C;*/
   margin-right: auto;
   margin-left: auto;
 }
@@ -288,6 +278,11 @@ div.day_entry {
   font-size: small;
   margin: 0 5px 5px 0;
   z-index: 2900;
+}
+
+div.new_entry {
+  height: 100%;
+  width: 100%;
 }
 
 tr.top {
