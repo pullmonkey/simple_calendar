@@ -40,7 +40,7 @@ class SimpleCalendarController < ApplicationController
     @mode  = 'month'
     if !params[:date].nil?
       @date  = params[:date].to_date
-      @day   = 1
+      @day   = @date.day
       @month = @date.month
       @year  = @date.year
     else 
