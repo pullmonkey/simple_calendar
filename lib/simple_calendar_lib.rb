@@ -1,21 +1,20 @@
 # SimpleCalendar
 #
 # Form Builder
-class SimpleCalendarFormBuilder < ActionView::Helpers::FormBuilder
-  helpers = field_helpers +
-            %w(datetime_select) - 
-            %w(hidden_field label fields_for)
+module SimpleCalendarMod
+  class SimpleCalendarFormBuilder < ActionView::Helpers::FormBuilder
+    helpers = field_helpers +
+              %w(datetime_select) - 
+              %w(hidden_field label fields_for)
 
-  helpers.each do |name|
-    define_method(name) do |field, *args|
-      options = args.last.is_a?(Hash) ? args.pop : {}
-      label = label(field, options[:label], :class => options[:label_class])
-      @template.content_tag(:p, @template.content_tag(:b, label) + ":<br/>" + super)
+    helpers.each do |name|
+      define_method(name) do |field, *args|
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        label = label(field, options[:label], :class => options[:label_class])
+        @template.content_tag(:p, @template.content_tag(:b, label) + ":<br/>" + super)
+      end
     end
   end
-end
-
-module SimpleCalendarMod
   module ViewPaths
     def self.included(klas)
       klas.append_view_path File.join(File.dirname(__FILE__), '..', 'app', 'views')
@@ -25,8 +24,9 @@ module SimpleCalendarMod
     def self.included(base)
       base.extend(ActionView)
       base.class_eval do
-        def render_with_simple_calendar(options = {}, local_assigns = {}, &block) #:nodoc:
+        def render_with_simple_calendar(options = {}, local_assigns = {}, &block)
           if options.is_a?(Hash) and options[:simple_calendar]
+            initialize_simple_calendar(options)
             render_simple_calendar(options, local_assigns, &block)
           else
             render_without_simple_calendar(options, local_assigns, &block)
@@ -34,7 +34,17 @@ module SimpleCalendarMod
         end
         alias_method_chain :render, :simple_calendar
 
-        def render_simple_calendar(options = {}, local_assigns = {}, &block)
+        def render_with_small_simple_calendar(options = {}, local_assigns = {}, &block)
+          if options.is_a?(Hash) and options[:small_simple_calendar]
+            initialize_simple_calendar(options)
+            render_small_simple_calendar(options, local_assigns, &block)
+          else
+            render_without_small_simple_calendar(options, local_assigns, &block)
+          end
+        end
+        alias_method_chain :render, :small_simple_calendar
+
+        def initialize_simple_calendar(options = {})
           @admin = options[:admin] || false
           session[:simple_calendar_admin] = @admin
 
@@ -61,7 +71,9 @@ module SimpleCalendarMod
                       all_by_month_and_year(@month, @year).
                       sort{|a,b| a.start_time <=> b.start_time}.
                       group_by(&:date)
+        end
 
+        def render_simple_calendar(options = {}, local_assigns = {}, &block)
           if @layout
             render :partial => 'shared/calendar'
           else
@@ -72,6 +84,9 @@ module SimpleCalendarMod
               render :partial => 'shared/month'
             end
           end
+        end
+
+        def render_small_simple_calendar(options = {}, local_assigns = {}, &block)
         end
       end
     end
