@@ -7,6 +7,7 @@
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
     if(<%= @admin %>) {
       $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry', toTop: true});
+    $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'input.wiki_entries_button', toTop: true});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?
     if($j.browser.msie) {
@@ -19,6 +20,7 @@
 </script>
 <div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
+<div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
 <table class="simple_calendar">
   <tr colspan="7">
     <th colspan="7">
@@ -28,6 +30,9 @@
       <%= select_year( @date, {}, {:id => "date_year",
                                    :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_year'},
                                                                           :with => "'year='+this.value+'&month='+$('date_month').value")}"})%>
+      <% if @show_wiki_entries_button -%>
+        <%= button_to "Wiki Entries", {}, :id => url_for(:controller => "simple_calendar_entries", :action => "entries_without_time"), :class => "wiki_entries_button" %>
+      <% end -%>
     </th>
   </tr>
   <tr>
@@ -48,20 +53,18 @@
       <div class='new_entry' id="<%= path_for_new_calendar_entry_month(day + 1) %>">
         <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
           <% entries.each_with_index do |entry, x| -%>
-            <% if x < 4 -%> <!-- only display 4 entries per day in the month view -->
+            <% if x < 6 -%> <!-- only display 4 entries per day in the month view -->
               <div class="time_entry">
                 <%= entry.time -%>
                 <%= link_to entry.name, simple_calendar_entry_path(entry), {:class => 'entry'} -%>
               </div>
-              <br clear="all" />
             <% end -%>
-            <% if x == 4 -%>
+            <% if x == 6 -%>
               <div class="more_link">
                 <%= #link_to "more...", path_to_day_view(day + 1), {:class => 'more_link'} 
                 %>
                 more...
               </div>
-              <br clear="all">
             <% end -%>
           <% end -%>
         <% end -%>

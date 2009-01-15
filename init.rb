@@ -16,6 +16,7 @@ class << ActionController::Routing::Routes;self;end.class_eval do
 end
 
 ActionController::Routing::Routes.draw do |map|
+  map.connect '/simple_calendar_entries/entries_without_time', :controller => 'simple_calendar_entries', :action => 'entries_without_time'
   map.resources 'simple_calendar_entries'
 end
 

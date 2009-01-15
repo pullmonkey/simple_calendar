@@ -82,6 +82,12 @@ class SimpleCalendarEntriesController < ApplicationController
     redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
   end 
 
+  def entries_without_time
+    @future_entries = @simple_calendar.simple_calendar_entries.all_future_entries.sort{|a,b| a.start_time <=> b.start_time}
+    logger.error "ENTRIES: #{@future_entries.inspect}"
+    render :layout => false
+  end
+
 private
 
   def set_simple_calendar_defaults

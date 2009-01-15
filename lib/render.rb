@@ -53,6 +53,8 @@ module SimpleCalendarMod
         end
 
         def render_simple_calendar(options = {}, local_assigns = {}, &block)
+          @show_wiki_entries_button = options.has_key?(:show_wiki_entries) ? options[:show_wiki_entries] : false
+
           if @layout
             render :partial => 'shared/calendar'
           else

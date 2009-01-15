@@ -1,0 +1,9 @@
+<% %>
+<a href="" class="jqmClose"><em>Close</em></a>
+<% if @future_entries -%>
+  <% @future_entries.each do |entry| -%>
+    #<%= entry.start_time.to_date %> - <%= entry.name %> - <%= entry.detail %><br />
+  <% end -%>
+<% else -%>
+  There are no future entries
+<% end -%>

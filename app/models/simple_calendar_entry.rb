@@ -11,6 +11,11 @@ class SimpleCalendarEntry < ActiveRecord::Base
                                 Date.civil(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1)] 
               }}
 
+  named_scope :all_future_entries, {
+                :conditions => ["start_time >= ?", 
+                                Time.today]
+              }
+              
   def sibling_entries(month, year)
     entries = self.simple_calendar.simple_calendar_entries.
          all_by_month_and_year(month, year).
