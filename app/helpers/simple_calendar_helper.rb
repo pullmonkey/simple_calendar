@@ -21,4 +21,8 @@ module SimpleCalendarHelper
   def day_view_link(day)
     link_to "<div class='day'>#{day}</div>", path_to_day_view(day)
   end
+
+  def small_day_view_link(day)
+    link_to day, path_to_day_view(day)
+  end
 end

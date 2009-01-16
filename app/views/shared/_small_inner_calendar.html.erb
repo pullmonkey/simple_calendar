@@ -1,0 +1,46 @@
+<% -%>
+<div id="small_inner_calendar">
+  <table class="small_simple_calendar">
+    <tr>
+      <th colspan="7">
+        <b class="left">
+          <%= link_to_remote "<",  :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
+                                             :month => @month - 1, :year => @year} %>
+          <%= link_to_remote "<<", :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
+                                             :month => @month, :year => @year - 1} %>
+        </b>
+        <b class="right">
+          <%= link_to_remote ">>", :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
+                                             :month => @month, :year => @year + 1} %>
+          <%= link_to_remote ">",  :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date', 
+                                             :month => @month + 1, :year => @year} %>
+        </b>
+        <%= @date.strftime("%B %Y") %>
+      </th>
+    </tr>
+    <tr>
+      <% Date::ABBR_DAYNAMES.each do |day| -%>
+        <th width="<%= 100 / 7 -%>%"><%= day -%></th>
+      <% end -%>
+    </tr>
+    <tr>
+      <% @first_week_day.times do |blank_day| -%>
+        <td class="blank_day"></td>
+      <% end -%>
+      <% @days.times do |day| -%>
+        <td class="day <%= "selected" if Date.civil(@year, @month, day + 1) == Date.today -%>">
+          <%= @entries[Date.civil(@year, @month, day + 1)].nil? ? "#{small_day_view_link(day + 1)}" : "<b>#{small_day_view_link(day + 1)}</b>" %>
+        </td>
+        <% if day + 1 < @days and day.modulo(7) == 6 - @first_week_day -%>
+          </tr><tr>
+        <% end -%>
+      <% end -%>
+      <% last_day = (@first_week_day + (@days.modulo(7))).modulo(7) %>
+      <% if last_day != 0 -%>
+        <% (7 - last_day).times do |blank_day| -%>
+          <td class="blank_day"></td>
+        <% end -%>
+      <% end -%>
+    </tr>
+  </table>
+</div>

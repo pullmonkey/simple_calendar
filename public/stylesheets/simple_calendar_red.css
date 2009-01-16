@@ -162,3 +162,30 @@ div#errorExplanation h2 {
 div#errorExplanation p {
   color: #333;
 }
+
+/* Small Calendar */
+div#small_calendar, div#small_inner_calendar {
+  background-color: #800000;
+  color: black;
+}
+div#small_calendar a {
+  color: black;
+}
+div#small_calendar a:hover {
+  color: red;
+}
+table.small_simple_calendar th {
+  color: white;
+}
+table.small_simple_calendar td {
+  border: 1px solid lightgrey;  
+}
+table.small_simple_calendar td.blank_day {
+  background-color: #bbb;
+}
+table.small_simple_calendar td.day {
+  background-color: white;
+}
+table.small_simple_calendar td.selected {
+  background-color: #FFFF99;
+}

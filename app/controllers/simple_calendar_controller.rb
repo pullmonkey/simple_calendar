@@ -19,6 +19,25 @@ class SimpleCalendarController < ApplicationController
     end
   end
 
+  def small_refresh_date
+    month = params[:month].to_i
+    year  = params[:year].to_i
+    if month == 0
+      year -= 1
+      month = 12
+    end
+    if month == 13
+      year += 1
+      month = 1
+    end
+    render :update do |page|
+      page.replace_html :small_inner_calendar, :small_simple_calendar => session[:simple_calendar_name], 
+                                         :admin => session[:simple_calendar_admin], 
+                                         :year => year, :month => month,
+                                         :layout => false
+    end
+  end
+
   def day_view
     @mode = 'day'
     if !params[:date].nil?

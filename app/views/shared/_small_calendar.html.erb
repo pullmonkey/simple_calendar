@@ -1,0 +1,14 @@
+<%= javascript_include_tag 'nifty' %>
+<%= stylesheet_link_tag 'niftyCorners', 'simple_calendar', 'simple_calendar_red' %>
+<script type="text/javascript">
+  window.onload = function() {
+    if(!NiftyCheck())
+      return;
+    Rounded("div#small_calendar","all","#FFF","#800000","smooth");
+  }
+</script>
+<div id="small_calendar">
+  <div id="small_inner_calendar">
+    <%= render :partial => "shared/small_inner_calendar" %>
+  </div>
+</div>

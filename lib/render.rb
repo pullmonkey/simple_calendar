@@ -5,6 +5,7 @@ module SimpleCalendarMod
       base.class_eval do
         def render_with_simple_calendar(options = {}, local_assigns = {}, &block)
           if options.is_a?(Hash) and options[:simple_calendar]
+            @calendar_name = options[:simple_calendar] || "default_simple_calendar"
             initialize_simple_calendar(options)
             render_simple_calendar(options, local_assigns, &block)
           else
@@ -15,6 +16,7 @@ module SimpleCalendarMod
 
         def render_with_small_simple_calendar(options = {}, local_assigns = {}, &block)
           if options.is_a?(Hash) and options[:small_simple_calendar]
+            @calendar_name = options[:small_simple_calendar] || "default_simple_calendar"
             initialize_simple_calendar(options)
             render_small_simple_calendar(options, local_assigns, &block)
           else
@@ -42,7 +44,6 @@ module SimpleCalendarMod
 
           @first_week_day = (@date - @date.day.days + 1.day).wday
           @calendar_path = options[:return_to] || session[:simple_calendar_path] || ""
-          @calendar_name = options[:simple_calendar] || "default_simple_calendar"
           @simple_calendar = SimpleCalendar.find_or_create_by_name(@calendar_name)
           session[:simple_calendar_name] = @calendar_name
           session[:simple_calendar_path] = @calendar_path
@@ -68,6 +69,9 @@ module SimpleCalendarMod
         end
 
         def render_small_simple_calendar(options = {}, local_assigns = {}, &block)
+          @layout ?
+            (render :partial => 'shared/small_calendar') :
+            (render :partial => 'shared/small_inner_calendar')
         end
       end
     end

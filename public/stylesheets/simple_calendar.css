@@ -313,10 +313,6 @@ td.today{
   border: 3px double salmon;
 }
 
-/*table.tab {
-  background-color: #999999;
-}*/
-
 li#tab {
   background-color: #999999;
   padding: 0px;
@@ -327,28 +323,8 @@ li#active_tab {
   padding: 0px;
 }
 
-/*table.tab_active {
-  background-color: #CCCC00;
-}
-
-table.tab_active td.left_tab_border{
-  border-left: 1px solid #CCCC00;
-}
-
-table.tab_active td.right_tab_border{
-  border-right: 1px solid #CCCC00;
-}
-
-table.tab_active td.top_tab_border {
-  border-top: 1px solid #CCCC00;
-}*/
-
 p.left-align{
   text-align: left;
-}
-
-div.jpmPopup b {
-  color: black
 }
 
 /*div#flash_error {
@@ -374,7 +350,36 @@ div#flash_warning {
   padding:5px;
 }*/
 
+/* Small Calendar */
+div#small_calendar {
+  width: 200pt;
+  height: 160pt;
+  font-size: 10pt;
+}
+div#small_inner_calendar {
+  height: 100%;
+  width: 100%;
+}
+table.small_simple_calendar {
+  width: 95%;
+  height: 95%;
+  text-align: center;
+  margin: auto;
+}
+table.small_simple_calendar th {
+  text-align: center;
+}
+table.small_simple_calendar td {
+  text-align: center;
+}
+.left { float: left; }
+.right { float: right; }
+
 /* FORMS */
+div.jpmPopup b {
+  color: black
+}
+
 div.iqmWindow {
   font-size: 125%;
   text-align: center;
@@ -452,4 +457,3 @@ div#errorExplanation ul li {
   font-size: 12px;
   list-style: none;
 }
-
