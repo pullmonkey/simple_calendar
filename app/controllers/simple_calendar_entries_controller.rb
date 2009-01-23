@@ -10,7 +10,7 @@ class SimpleCalendarEntriesController < ApplicationController
     @mode = params[:mode] ? params[:mode] : "month"
     @date = params[:id].to_time.utc
     if !@admin
-      redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + "?date=#{@date.to_date}"
+      render_calendar
       return
     end
     if !params[:hour].nil?
@@ -27,7 +27,7 @@ class SimpleCalendarEntriesController < ApplicationController
   def create
     @mode = params[:simple_calendar_entry][:mode]
     if !@admin
-      redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + "?date=#{@date.to_date}"
+      render_calendar
       return
     end
     params[:simple_calendar_entry].delete(:mode)
@@ -35,7 +35,8 @@ class SimpleCalendarEntriesController < ApplicationController
     @simple_calendar_entry.save ? 
       flash[:notice] = "Calendar Entry Saved" : 
       flash[:error] = "Calendar Entry Could Not Be Saved"
-    redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
+    @date = @simple_calendar_entry.start_time.to_date
+    render_calendar
   end
 
   def show
@@ -47,8 +48,9 @@ class SimpleCalendarEntriesController < ApplicationController
   def edit
     @mode = params[:mode] ? params[:mode] : "month"
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
+    @date = @simple_calendar_entry.start_time.to_date
     if !@admin
-      redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
+      render_calendar
       return
     end
     render :partial => 'form', :layout => false
@@ -59,13 +61,14 @@ class SimpleCalendarEntriesController < ApplicationController
     params[:simple_calendar_entry].delete(:mode)
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
     if !@admin
-      redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
+      render_calendar
       return
     end
     @simple_calendar_entry.update_attributes(params[:simple_calendar_entry]) ? 
       flash[:notice] = "Calendar Entry Updated" : 
       flash[:error] = "Calendar Entry Could not be Updated"
-    redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
+    @date = @simple_calendar_entry.start_time.to_date
+    render_calendar
   end
 
   def delete
@@ -79,12 +82,12 @@ class SimpleCalendarEntriesController < ApplicationController
     else
       flash[:error] = "You are not an admin"
     end
-    redirect_to "#{@calendar_path}/simple_calendar/" + (@mode == "day" ? "day_view" : "month_view") + (@simple_calendar_entry ? "?date=#{@simple_calendar_entry.start_time.to_date}" : "")
+    @date = @simple_calendar_entry.start_time.to_date
+    render_calendar
   end 
 
   def entries_without_time
     @future_entries = @simple_calendar.simple_calendar_entries.all_future_entries.sort{|a,b| a.start_time <=> b.start_time}
-    logger.error "ENTRIES: #{@future_entries.inspect}"
     render :layout => false
   end
 
@@ -92,9 +95,13 @@ private
 
   def set_simple_calendar_defaults
     @simple_calendar = SimpleCalendar.find_or_create_by_name(session[:simple_calendar_name])
-    @calendar_path = ""
+    @calendar_path = "/"
     @calendar_path = session[:simple_calendar_prefix] if not session[:simple_calendar_prefix].empty?
     @calendar_path = session[:simple_calendar_path] if not session[:simple_calendar_path].empty?
     @admin = session[:simple_calendar_admin]
+  end
+
+  def render_calendar
+    redirect_to @calendar_path + "?mode=#{@mode}&date=#{@date}"
   end
 end

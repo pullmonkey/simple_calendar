@@ -1,21 +1,3 @@
-a.jqmClose em{display:none;}
-a.jqmClose {
-  width:20px;
-  height:20px;
-  display:block;
-  float:right;
-  clear:right;
-  background:transparent url(../images/close_icon_double.png) 0 0 no-repeat; !important
-  background: url(../images/close_icon_double.gif) 0 0 no-repeat;
-}
-
-a.jqmClose:hover, a.jqmCloseHover{ background-position: 0 -20px; }
-
-div#calendar_modal h1 {
-  padding: 0px;
-  margin: 0px;
-}
-
 table.simple_calendar_border {
   padding: 0px;
   margin-left: auto;
@@ -375,44 +357,6 @@ table.small_simple_calendar td {
 .left { float: left; }
 .right { float: right; }
 
-/* FORMS */
-div.jpmPopup b {
-  color: black
-}
-
-div.iqmWindow {
-  font-size: 125%;
-  text-align: center;
-}
-
-div.jqmWindow label {
-  display: inline;
-  padding: 0px;
-}
-
-div.jqmWindow b {
-  color: black;
-}
-
-div.jqmWindow textarea {
-  height: 90px;
-  width: 300px;
-}
-
-div.jqmWindow h1 {
-  text-align: center;
-}
-
-div.jqmWindow h2 {
-  font-size: 1.33em;
-  margin-bottom: 0.75em;
-  text-align: center;
-}
-
-div.jqmWindow form {
-  height: 100%;
-  text-align: center;
-}
 
 /* FORMS - ERRORS */
 .fieldWithErrors {

@@ -19,7 +19,8 @@ module SimpleCalendarHelper
   end
 
   def day_view_link(day)
-    link_to "<div class='day'>#{day}</div>", path_to_day_view(day)
+    link_to_remote "<div class='day'>#{day}</div>", :url => path_to_day_view(day),
+                                                    :complete => "tabsRoundedCorners()"
   end
 
   def small_day_view_link(day)

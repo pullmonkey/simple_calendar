@@ -7,15 +7,12 @@ class SimpleCalendarController < ApplicationController
   def index
   end
   
-  def refresh_month
+  def refresh_date
     render :update do |page| 
-      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin], :layout => false, :month => params[:month], :year => params[:year]
-    end
-  end
-
-  def refresh_year
-    render :update do |page|
-      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], :admin => session[:simple_calendar_admin], :layout => false, :year => params[:year], :month => params[:month]
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], 
+                                         :admin => session[:simple_calendar_admin], 
+                                         :month => params[:month], :year => params[:year],
+                                         :layout => false 
     end
   end
 
@@ -52,7 +49,14 @@ class SimpleCalendarController < ApplicationController
     @hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
               '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
 
-    render :action => 'index'
+    render :update do |page|
+      page.replace_html :tabs_column, :partial => 'shared/tabs'
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], 
+                                         :admin => session[:simple_calendar_admin], 
+                                         :date => @date,
+                                         :mode => @mode,
+                                         :layout => false 
+    end
   end 
 
   def month_view
@@ -69,6 +73,13 @@ class SimpleCalendarController < ApplicationController
     end
     @date = Date.new(@year.to_i, @month.to_i, @day.to_i)
 
-    render :action => 'index'
+    render :update do |page|
+      page.replace_html :tabs_column, :partial => 'shared/tabs'
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], 
+                                         :admin => session[:simple_calendar_admin], 
+                                         :date => @date,
+                                         :mode => @mode,
+                                         :layout => false 
+    end
   end
 end

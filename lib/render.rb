@@ -55,11 +55,15 @@ module SimpleCalendarMod
 
         def render_simple_calendar(options = {}, local_assigns = {}, &block)
           @show_wiki_entries_button = options.has_key?(:show_wiki_entries) ? options[:show_wiki_entries] : false
+          @show_wiki_entries_button = session[:simple_calendar_show_wiki_entries_button] if !options.has_key?(:show_wiki_entries) and session[:simple_calendar_show_wiki_entries_button]
+          session[:simple_calendar_show_wiki_entries_button] = @show_wiki_entries_button
 
           if @layout
             render :partial => 'shared/calendar'
           else
             if @mode == 'day'
+              @hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
+                        '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
               @entries = @entries[Date.civil(@year, @month, @day)]
               render :partial => 'shared/day'
             else
