@@ -5,6 +5,7 @@ table.simple_calendar_border th{
   color: white;
 }
 table.simple_calendar th {
+  border: 1px solid lightgrey;  
   color: white;
   background-color: #800000;
 }

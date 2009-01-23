@@ -22,7 +22,7 @@
 <div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
 <table class="simple_calendar">
   <tr colspan="7">
-    <th colspan="7">
+    <th colspan="7" style="border: 0;">
       <%= select_month(@date, {}, {:id => "date_month",
                                    :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
                                                                         :with => "'month='+this.value+'&year='+$('date_year').value")}"})%> 
