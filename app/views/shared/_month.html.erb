@@ -19,7 +19,7 @@
 </script>
 <div class="jqmWindow" id="calendar_modal" style="display:none;"></div>
 <div class="jqmWindow" id="calendar_modal_2" style="display:none;"></div>
-<div class="jqmWindow" id="calendar_modal_3" style="display:none;"></div>
+<div class="jqmWindow" id="calendar_modal_3" style="display:none; text-align: left;"></div>
 <table class="simple_calendar">
   <tr colspan="7">
     <th colspan="7" style="border: 0;">
@@ -30,7 +30,7 @@
                                    :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
                                                                           :with => "'year='+this.value+'&month='+$('date_month').value")}"})%>
       <% if @show_wiki_entries_button -%>
-        <%= button_to "Wiki Entries", {}, :id => url_for(:controller => "simple_calendar_entries", :action => "entries_without_time"), :class => "wiki_entries_button" %>
+        <%= button_to "Wiki Entries", {}, :id => "#{home_path}/simple_calendar_entries/entries_without_time", :class => "wiki_entries_button" %>
       <% end -%>
     </th>
   </tr>
