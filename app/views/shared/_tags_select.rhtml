@@ -1,0 +1,8 @@
+<% -%>
+<div id="tags_selector" style="float:right;">
+  Filter Tags:
+  <%= collection_select :filter, :tag, @all_tags, :name, :name, {:include_blank => "All Tags"},
+      {:onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'render_all_with_tag'}, 
+       :with => "'tag='+this.value+'&mode=#{@mode}&date=#{@date}'")}"} %>
+</div>
+<%= javascript_tag("$('filter_tag').value = \"#{@selected_tag}\";") %>

@@ -1,4 +1,6 @@
 class SimpleCalendarEntry < ActiveRecord::Base
+  acts_as_taggable
+
   belongs_to :simple_calendar
 
   validates_presence_of :name, :message => "^You must enter a name first"

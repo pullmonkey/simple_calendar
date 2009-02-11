@@ -17,7 +17,12 @@
 <a href="" class="jqmClose"><em>Close</em></a>
 <h1><%= @simple_calendar_entry.name %></h1><br />
 <p class="left-align"><b>Description:</b> <%= @simple_calendar_entry.detail %></p>
-<p class="left-align"><b>Details:</b> <%= @simple_calendar_entry.date_time %></p><br />
+<p class="left-align"><b>Details:</b> <%= @simple_calendar_entry.date_time %></p>
+<p class="left-align"><b>Tags:</b> 
+<% @simple_calendar_entry.tag_counts.each do |tag| -%>
+  <%= tag.name -%><%= ", " if tag != @simple_calendar_entry.tag_counts.last -%>
+<% end -%>
+</p><br />
 <% if @admin -%>
   <p style="text-align: center;">
     <%= link_to "Edit event details", edit_simple_calendar_entry_path(@simple_calendar_entry) + "?mode=#{@mode}", {:class => 'entry_2'} %> | 

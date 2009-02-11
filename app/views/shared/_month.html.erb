@@ -23,12 +23,15 @@
 <table class="simple_calendar">
   <tr colspan="7">
     <th colspan="7" style="border: 0;">
-      <%= select_month(@date, {}, {:id => "date_month",
-                                   :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
-                                                                        :with => "'month='+this.value+'&year='+$('date_year').value")}"})%> 
-      <%= select_year( @date, {}, {:id => "date_year",
-                                   :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
-                                                                          :with => "'year='+this.value+'&month='+$('date_month').value")}"})%>
+      <%= render :partial => 'shared/tags_select' %>
+      <%= select_month(@date, {}, 
+                       {:id => "date_month",
+                        :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
+                                     :with => "'month='+this.value+'&year='+$('date_year').value+'&tag='+$('filter_tag').value")}"})%> 
+      <%= select_year(@date, {}, 
+                      {:id => "date_year",
+                       :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
+                                    :with => "'year='+this.value+'&month='+$('date_month').value+'&tag='+$('filter_tag').value")}"})%>
       <% if @show_wiki_entries_button -%>
         <%= button_to "Wiki Entries", {}, :id => "#{home_path}/simple_calendar_entries/entries_without_time", :class => "wiki_entries_button" %>
       <% end -%>

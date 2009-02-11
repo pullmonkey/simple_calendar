@@ -5,7 +5,7 @@
       <% if @mode == "day" %>
         Day
       <% else %>
-        <%= link_to_remote "Day", :url => "#{home_path}/simple_calendar/day_view?date=#{@date}",
+        <%= link_to_remote "Day", :url => path_to_day_view(@date.day),
                                   :complete => "tabsRoundedCorners()" %>
       <% end %>
     </li>
@@ -13,7 +13,7 @@
        <% if @mode != "day" %>
          Month 
        <% else %>
-        <%= link_to_remote "Month", :url => "#{home_path}/simple_calendar/month_view?date=#{@date}",
+        <%= link_to_remote "Month", :url => path_to_month_view,
                                     :complete => "tabsRoundedCorners()" %>
        <% end %>
     </li>  

@@ -39,24 +39,36 @@ module SimpleCalendarMod
           @year  = (options[:year]  || @date.year).to_i
           @month = (options[:month] || @date.month).to_i
           @days  = Time.days_in_month(@month, @year)    
-          @day = @mode == 'month' ? 1 : @date.day
+          @day = @mode == 'month' ? Date.today.day : @date.day
           @date  = Date.new(@year, @month, @day)
 
           @first_week_day = (@date - @date.day.days + 1.day).wday
           @calendar_path = options[:return_to] || session[:simple_calendar_path] || ""
+          $simple_calendar_path = @calendar_path
           @simple_calendar = SimpleCalendar.find_or_create_by_name(@calendar_name)
           session[:simple_calendar_name] = @calendar_name
           session[:simple_calendar_path] = @calendar_path
           @entries = @simple_calendar.simple_calendar_entries.
-                      all_by_month_and_year(@month, @year).
-                      sort{|a,b| a.start_time <=> b.start_time}.
-                      group_by(&:date)
+                      all_by_month_and_year(@month, @year)
+
+          @selected_tag = options[:tag] || ""
+          session[:simple_calendar_selected_tag] = @selected_tag
+          @entries = @entries.find_tagged_with(@selected_tag) if not @selected_tag.blank?
+
+          @entries = @entries.sort{|a,b| a.start_time <=> b.start_time}.
+                              group_by(&:date)
         end
 
         def render_simple_calendar(options = {}, local_assigns = {}, &block)
           @show_wiki_entries_button = options.has_key?(:show_wiki_entries) ? options[:show_wiki_entries] : false
           @show_wiki_entries_button = session[:simple_calendar_show_wiki_entries_button] if !options.has_key?(:show_wiki_entries) and session[:simple_calendar_show_wiki_entries_button]
           session[:simple_calendar_show_wiki_entries_button] = @show_wiki_entries_button
+
+          @use_tags = options.has_key?(:taggable) ? options[:taggable] : false
+          @use_tags = session[:simple_calendar_taggable] if !options.has_key?(:taggable) and session[:simple_calendar_taggable]
+          session[:simple_calendar_taggable] = @use_tags
+
+          @all_tags = SimpleCalendarEntry.tag_counts if @use_tags
 
           if @layout
             render :partial => 'shared/calendar'

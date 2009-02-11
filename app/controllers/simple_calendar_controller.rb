@@ -12,6 +12,7 @@ class SimpleCalendarController < ApplicationController
       page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], 
                                          :admin => session[:simple_calendar_admin], 
                                          :month => params[:month], :year => params[:year],
+                                         :tag => params[:tag],
                                          :layout => false 
     end
   end
@@ -55,6 +56,7 @@ class SimpleCalendarController < ApplicationController
                                          :admin => session[:simple_calendar_admin], 
                                          :date => @date,
                                          :mode => @mode,
+                                         :tag  => params[:tag],
                                          :layout => false 
     end
   end 
@@ -79,7 +81,19 @@ class SimpleCalendarController < ApplicationController
                                          :admin => session[:simple_calendar_admin], 
                                          :date => @date,
                                          :mode => @mode,
+                                         :tag  => params[:tag],
                                          :layout => false 
+    end
+  end
+
+  def render_all_with_tag
+    render :update do |page|
+      page.replace_html :inner_calendar, :simple_calendar => session[:simple_calendar_name], 
+                                         :admin => session[:simple_calendar_admin], 
+                                         :date => @date,
+                                         :mode => @mode,
+                                         :layout => false,
+                                         :tag => params[:tag]
     end
   end
 end
