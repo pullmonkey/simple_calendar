@@ -29,6 +29,6 @@ module SimpleCalendarHelper
   end
 
   def small_day_view_link(day)
-    link_to day, path_to_day_view(day)
+    link_to day, "#{session[:simple_calendar_link_path]}?mode=day&date=#{Date.new(@year, @month, day)}"
   end
 end

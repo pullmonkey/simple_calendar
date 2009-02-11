@@ -96,6 +96,7 @@ module SimpleCalendarMod
         end
 
         def render_small_simple_calendar(options = {}, local_assigns = {}, &block)
+          session[:simple_calendar_link_path] = options[:path] || "/"
           @layout ?
             (render :partial => 'shared/small_calendar') :
             (render :partial => 'shared/small_inner_calendar')
