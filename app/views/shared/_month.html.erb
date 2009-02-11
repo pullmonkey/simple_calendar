@@ -23,18 +23,18 @@
 <table class="simple_calendar">
   <tr colspan="7">
     <th colspan="7" style="border: 0;">
-      <%= render :partial => 'shared/tags_select' %>
       <%= select_month(@date, {}, 
                        {:id => "date_month",
                         :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
-                                     :with => "'month='+this.value+'&year='+$('date_year').value+'&tag='+$('filter_tag').value")}"})%> 
+                                     :with => "'month='+this.value+'&year='+$('date_year').value+'&tag=#{@selected_tag}'")}"})%> 
       <%= select_year(@date, {}, 
                       {:id => "date_year",
                        :onchange => "#{remote_function(:url => {:controller => 'simple_calendar', :action => 'refresh_date'},
-                                    :with => "'year='+this.value+'&month='+$('date_month').value+'&tag='+$('filter_tag').value")}"})%>
+                                    :with => "'year='+this.value+'&month='+$('date_month').value+'&tag=#{@selected_tag}'")}"})%>
       <% if @show_wiki_entries_button -%>
         <%= button_to "Wiki Entries", {}, :id => "#{home_path}/simple_calendar_entries/entries_without_time", :class => "wiki_entries_button" %>
       <% end -%>
+      <%= render :partial => 'shared/tags_select' %>
     </th>
   </tr>
   <tr>
