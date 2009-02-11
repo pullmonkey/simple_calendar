@@ -1,5 +1,5 @@
 module SimpleCalendarMod
-  module Routing
+  module CalendarRouting
     module MapperExtensions
       def simple_calendar
         $simple_calendar_path ||= ""
