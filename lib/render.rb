@@ -25,6 +25,17 @@ module SimpleCalendarMod
         end
         alias_method_chain :render, :small_simple_calendar
 
+        def render_with_simple_calendar_upcoming_events(options = {}, local_assigns = {}, &block)
+          if options.is_a?(Hash) and options[:simple_calendar_upcoming_events]
+            @calendar_name = options[:simple_calendar_upcoming_events] || "default_simple_calendar"
+            initialize_simple_calendar(options)
+            render_simple_calendar_upcoming_events(options, local_assigns, &block)
+          else
+            render_without_simple_calendar_upcoming_events(options, local_assigns, &block)
+          end
+        end
+        alias_method_chain :render, :simple_calendar_upcoming_events
+
         def initialize_simple_calendar(options = {})
           @admin = options[:admin] || false
           session[:simple_calendar_admin] = @admin
@@ -39,7 +50,7 @@ module SimpleCalendarMod
           @year  = (options[:year]  || @date.year).to_i
           @month = (options[:month] || @date.month).to_i
           @days  = Time.days_in_month(@month, @year)    
-          @day = @mode == 'month' ? Date.today.day : @date.day
+          @day = @mode == 'month' ? 1 : @date.day
           @date  = Date.new(@year, @month, @day)
 
           @first_week_day = (@date - @date.day.days + 1.day).wday
@@ -88,6 +99,15 @@ module SimpleCalendarMod
           @layout ?
             (render :partial => 'shared/small_calendar') :
             (render :partial => 'shared/small_inner_calendar')
+        end
+
+        def render_simple_calendar_upcoming_events(options = {}, local_assigns = {}, &block)
+          @items = options[:items]
+          @path = options[:path] || "/"
+          @entries = @simple_calendar.simple_calendar_entries.all_future_entries
+          @entries = @entries.find_tagged_with(@selected_tag) if not @selected_tag.blank?
+          @entries.sort!{|a,b| a.start_time <=> b.start_time}
+          render :partial => 'shared/upcoming_events'
         end
       end
     end
