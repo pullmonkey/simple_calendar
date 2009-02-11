@@ -1,12 +1,15 @@
 # Include hook code here
 require 'application'
 require 'simple_calendar_lib'
+require 'routing'
 require File.join(directory, 'app', 'helpers') + "/simple_calendar_helper"
 require File.join(directory, 'app', 'helpers') + "/simple_calendar_entries_helper"
 
 ActionView::Base.send :include, SimpleCalendarHelper
 ActionView::Base.send :include, SimpleCalendarEntriesHelper
 ActionView::Base.send :include, SimpleCalendarMod::Render
+
+ActionController::Routing::RouteSet::Mapper.send :include, SimpleCalendarMod::Routing::MapperExtensions
 
 ApplicationController.send :include, SimpleCalendarMod::ViewPaths
 
