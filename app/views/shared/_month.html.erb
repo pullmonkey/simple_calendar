@@ -58,7 +58,7 @@
             <% if x < 6 -%> <!-- only display 4 entries per day in the month view -->
               <div class="time_entry">
                 <%= entry.time -%>
-                <%= link_to truncate(entry.name, :length => 20), simple_calendar_entry_path(entry), {:class => 'entry'} -%>
+                <%= link_to truncate(entry.name, :length => 15), simple_calendar_entry_path(entry), {:class => 'entry', :title => entry.name} -%>
               </div>
             <% end -%>
             <% if x == 6 -%>
