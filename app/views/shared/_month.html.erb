@@ -54,24 +54,24 @@
       <%= day_view_link(day + 1) %>
       <div class='new_entry' id="<%= path_for_new_calendar_entry_month(day + 1) %>">
         <% if !(entries = @entries[Date.civil(@year, @month, day + 1)]).nil? -%>
-          <% entries.each_with_index do |entry, x| -%>
-            <% if x < 6 -%> <!-- only display 4 entries per day in the month view -->
+          <% entries.each_with_index do |entry, @x| -%>
+            <% if @x < 6 -%> <!-- only display 6 entries per day in the month view -->
               <div class="time_entry">
                 <%= entry.time -%>
                 <%= link_to truncate(entry.name, :length => @link_length), simple_calendar_entry_path(entry), 
                             {:class => 'entry', :title => entry.name} -%>
               </div>
             <% end -%>
-            <% if x == 6 -%>
+            <% if @x == 6 -%>
+              </div> <!-- new_entry div closing -->
               <div class="more_link">
-                <%= #link_to "more...", path_to_day_view(day + 1), {:class => 'more_link'} 
-                %>
-                more...
+                <%= link_to_remote "#{entries.size - 6} more...", :url => path_to_day_view(day + 1),
+                                                                  :complete => "tabsRoundedCorners()" %>
               </div>
             <% end -%>
           <% end -%>
         <% end -%>
-      </div>
+    <%= "</div>" if (@x and @x < 6) or @entries[Date.civil(@year, @month, day + 1)].nil? -%> <!-- new_entry div closing -->
     </td>
     <% if day + 1 < @days and day.modulo(7) == 6 - @first_week_day -%>
       </tr><tr>
