@@ -34,12 +34,19 @@ Dependencies
 This plugin only has 1 dependency which is the acts_as_taggable_on_steroids 
 plugin. This plugin is only needed if you want to be able to make your enties
 taggable. To install this plugin do:
-ruby script/plugin install http://svn.viney.net.nz/things/rails/plugins/acts_as_taggable_on_steroids
+  ruby script/plugin install http://svn.viney.net.nz/things/rails/plugins/acts_as_taggable_on_steroids
 
 Environment.rb
 ==============
 config.time_zone = 'UTC'
 
+Layout
+======
+You only need to add the color stylesheet to your layout. As of now all we have
+is red and gold. Just pick one and add it to your layout.
+
+  <%= stylesheet_link_tag 'simple_calendar_red' %>
+  <%= stylesheet_link_tag 'simple_calendar_gold' %>
 
 Example of Calendar
 ===================

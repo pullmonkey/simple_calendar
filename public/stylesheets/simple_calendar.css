@@ -11,7 +11,6 @@ table.simple_calendar_border tr{
 }
 
 table.simple_calendar_border th{
-  color: white;
   font-weight: bold;
   font-size: 18px;
 }
@@ -66,19 +65,10 @@ table.simple_calendar div.more_link {
   margin-right: 15px;
   padding-top: 0px;
   font-size: 12px;
-  /*color: black;*/
-}
-
-table.simple_calendar div.more_link a:hover {
-  /*color: red;*/
 }
 
 a {
   text-decoration: none;
-}
-
-a:hover {
-  background-color: transparent;
 }
 
 div.table_border {
@@ -97,7 +87,6 @@ div#inner_calendar {
 
 table.cal, table.day_cal {
   border-collapse: collapse;
-  background-color: white;
 }
 
 table.cal {
@@ -112,15 +101,8 @@ table.cal th, table.day_cal th {
   border: none;
 }
 
-table.day_cal th {
-  border:1px solid lightgrey;
-}
-
 table.cal td, table.day_cal td {
-  /*text-align: right;*/
   vertical-align: top;
-  border:1px solid lightgrey;
-  color: black;
   font-size: 16px;
 }
 
@@ -142,19 +124,13 @@ tr.month{
 }
 
 table.hours {
-  background-color: white;
-  color: #333333;
-  border: 1px solid #333333;
   border-collapse: collapse;
 }
 
 table.hours td {
-  border: 1px solid #333333;
 }
 
 table.hours th {
-  border: 1px solid #333333;
-  border-right: 3px double #333333;
   font-size: 11px;
 }
 
@@ -163,17 +139,8 @@ th.hour_header {
   cursor: hand;
 }
 
-a.day_link, a:hover.day_link {
-  color: #333333;
-  background-color: transparent;
-}
 select.month option{
   font-size: 18px;
-}
-
-a.day_next, a:hover.day_next {
-  color: #CCCCCC;
-  background-color: transparent;
 }
 
 .filler {
@@ -194,43 +161,33 @@ a.day_next, a:hover.day_next {
 }
 
 #tabs li {
-  background: #979797;
   float: left;
   display:block;
-  border-right: 3px solid #fff;
   padding:0;
   width: 45px;
   text-align: center;
 }
 
 #tabs li.unselected {
-  border-bottom: 3px solid #979797;
   margin-bottom: 0;
 }
 
 #tabs li.selected {
   /*background-color: #AA4444;
   border-bottom: 3px solid #AA4444;*/
-  background-color: #CCCC00;
-  border-bottom: 3px solid #CCCC00;
-  color: white;
   margin-bottom: 0;
 }
 
 #tabs a, #tabs a:link, #tabs a:visited, #tabs a:hover, #tabs a:active {
   text-decoration:none;
   cursor:pointer;
-  color:white;
   display: block;
   padding:0;
   border: none;
 }
 
 #tabs a:hover {
-  color:#9ed3f8;
-  background-color: transparent;
   border:none;
-  color: #333333;
 }
 
 #tabs img {
@@ -286,22 +243,11 @@ tr.top td{
   border-bottom: none;
 }
 
-tr.bottom td{
-  border-top: 1px dotted lightgrey;
-}
-
-td.today{
-  background-color: #FFE4E1;
-  border: 3px double salmon;
-}
-
 li#tab {
-  background-color: #999999;
   padding: 0px;
 }
 
 li#active_tab {
-  background-color: #CCCC00;
   padding: 0px;
 }
 
