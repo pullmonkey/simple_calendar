@@ -9,6 +9,7 @@
   <%= f.datetime_select :start_time, {:minute_step => 15} %>
   <%= f.datetime_select :end_time, {:minute_step => 15} %>
   <%= f.text_field :tag_list if session[:simple_calendar_taggable] %>
+  <%= "<p class=\"form_example\">(comma delimited)</p><br />" if session[:simple_calendar_taggable] %>
   <%= f.hidden_field :mode, :value => @mode %>
   <%= submit_tag "Submit" %>
 <% end -%>

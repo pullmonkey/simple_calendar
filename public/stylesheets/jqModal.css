@@ -93,3 +93,15 @@ div.jqmWindow form {
   height: 100%;
   text-align: center;
 }
+
+div.jqmWindow p {
+  margin-top: 5pt;
+  margin-bottom: 5pt;
+}
+
+div.jqmWindow p.form_example {
+  font-size: 8pt;
+  color: blue;
+  margin-top: -5pt;
+}
+
