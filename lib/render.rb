@@ -78,8 +78,10 @@ module SimpleCalendarMod
           @use_tags = options.has_key?(:taggable) ? options[:taggable] : false
           @use_tags = session[:simple_calendar_taggable] if !options.has_key?(:taggable) and session[:simple_calendar_taggable]
           session[:simple_calendar_taggable] = @use_tags
-
           @all_tags = SimpleCalendarEntry.tag_counts if @use_tags
+
+          @link_length = options[:entry_link_length] || session[:simple_calendar_link_length] || 15
+          session[:simple_calendar_link_length] = @links_length
 
           if @layout
             render :partial => 'shared/calendar'
@@ -105,6 +107,7 @@ module SimpleCalendarMod
         def render_simple_calendar_upcoming_events(options = {}, local_assigns = {}, &block)
           @items = options[:items]
           @path = options[:path] || "/"
+          @name_length = options[:entry_name_length] || 100
           @entries = @simple_calendar.simple_calendar_entries.all_future_entries
           @entries = @entries.find_tagged_with(@selected_tag) if not @selected_tag.blank?
           @entries.sort!{|a,b| a.start_time <=> b.start_time}

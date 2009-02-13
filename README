@@ -41,8 +41,8 @@ Environment.rb
 config.time_zone = 'UTC'
 
 
-Example
-=======
+Example of Calendar
+===================
 
 Put this in your view wherever you want the simple calendar to show up:
 
@@ -75,5 +75,42 @@ The additional options you can pass to simple_calendar are:
   :taggable => true/false - Pass true to enable taggable entries. When true you
       will be able to tag an entry and filter all entries depending on the tag.
                           - defaults to false
+  :entry_link_length => [integer] - The entry name will truncate at this value
+      in the month view
+      - defaults to 15
+
+Example of Small Calendar
+=========================
+This generates a small calendar with the month view and the day numbers are
+links to the day view in the large simple calendar. To do this put this
+anywhere in your view:
+
+  <%= render :small_simple_calendar => "test", 
+             :path => "/path/to/rendering/of/large/calendar" %>
+
+The name of the calendar must be the same as the one you use for the large
+simple calendar or else the entry data won't exist. The path is to where you 
+render the simple_calendar.
+
+Example of Upcoming Events
+==========================
+This generates a list of the upcoming events from todays date on.
+
+  <%= render :simple_calendar_upcoming_events => "test",
+             :path => "/path/to/rendering/of/large/calendar" %>
+  
+The name of the calendar must be the same as the one you use for the large
+simple calendar or else the entry data won't exist. The path is to where you 
+render the simple_calendar.
+
+The additional options you can pass to simple_calendar_upcoming_events are:
+  :items => 5 - This is the max number of items you want listed.
+              - default is everything it finds
+  :tag => 'mytag' - If you are using taggable entries then you can pass a tag
+      or a string of tags (comma delimited) to find from the calendar
+      - defaults to finding everything
+  :entry_name_length => 20 - The entry name will truncate at this value. This
+      does not include the length of the date.
+      - defaults to 100 so pretty much everything
 
 Copyright (c) 2008 [Sean Naegle], released under the MIT license

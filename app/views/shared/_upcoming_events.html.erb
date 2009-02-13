@@ -2,7 +2,10 @@
 <% if @entries and not @entries.empty? -%>
   <% @entries.each_with_index do |entry, i| -%>
     <% if @items and i < @items -%>
-      <%= i + 1 -%>. <%= link_to "#{entry.start_time.to_date} - #{entry.name}", "#{@path}?mode=day&date=#{entry.start_time.to_date}&tag=#{@selected_tag}" -%><br />
+      <%= i + 1 -%>. 
+      <%= link_to "#{entry.start_time.to_date} - #{truncate(entry.name, @name_length)}", 
+                  "#{@path}?mode=day&date=#{entry.start_time.to_date}&tag=#{@selected_tag}", 
+                  {:title => entry.name} -%><br />
     <% end -%>
   <% end -%>
 <% else -%>
