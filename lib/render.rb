@@ -3,6 +3,8 @@ module SimpleCalendarMod
     def self.included(base)
       base.extend(ActionView)
       base.class_eval do
+        include DayViewStartTimeData
+
         def render_with_simple_calendar(options = {}, local_assigns = {}, &block)
           if options.is_a?(Hash) and options[:simple_calendar]
             @calendar_name = options[:simple_calendar] || "default_simple_calendar"
@@ -37,6 +39,8 @@ module SimpleCalendarMod
         alias_method_chain :render, :simple_calendar_upcoming_events
 
         def initialize_simple_calendar(options = {})
+          session[:simple_calendar] ||= {}
+
           @admin = options[:admin] || false
           session[:simple_calendar_admin] = @admin
 
@@ -83,13 +87,47 @@ module SimpleCalendarMod
           @link_length = options[:entry_link_length] || session[:simple_calendar_link_length] || 15
           session[:simple_calendar_link_length] = @links_length
 
+          @day_start_time = options[:day_start_hour] || session[:simple_calendar][:day_start_time] || 0
+          session[:simple_calendar][:day_start_time] = @day_start_time
+
+          @day_end_time = options[:day_end_hour] || session[:simple_calendar][:day_end_time] || 23
+          @day_end_time -= 1 if options[:day_end_hour]
+          session[:simple_calendar][:day_end_time] = @day_end_time
+
           if @layout
             render :partial => 'shared/calendar'
           else
             if @mode == 'day'
-              @hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
-                        '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
               @entries = @entries[Date.civil(@year, @month, @day)]
+
+              if @entries
+                @entries.sort!{|a,b| a.start_time <=> b.start_time}
+                time = Date.civil(@year, @month, @day).to_time.utc
+                time = time - time.hour.hours + @day_start_time.hours
+                @day_start_time = @entries.first.start_time.hour if @entries.first.start_time < time
+
+                time = Date.civil(@year, @month, @day).to_time.utc
+                @entries.each do |entry|
+                  time = time - time.hour.hours + (@day_end_time + 1).hours
+                  @day_end_time = entry.end_time.hour if entry.end_time.to_date == time.to_date and entry.end_time > time
+                  @day_end_time = 23 if entry.end_time.to_date > time.to_date
+                  break if @day_end_time == 23
+                end
+              end
+              
+              DayViewStartTimeData.day_start_time = @day_start_time
+              
+              @hours = []
+              (@day_start_time..@day_end_time).each do |hour|
+                time = "#{hour}am" if hour < 12
+                time = "12am" if hour == 0
+                time = "12pm" if hour == 12
+                time = "#{hour - 12}pm" if hour > 12
+                @hours << time
+              end
+              #@hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', 
+              #          '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']
+              logger.error "HOURS: " + @hours.inspect
               render :partial => 'shared/day'
             else
               render :partial => 'shared/month'

@@ -85,6 +85,14 @@ The additional options you can pass to simple_calendar are:
   :entry_link_length => [integer] - The entry name will truncate at this value
       in the month view
       - defaults to 15
+  :day_start_hour => [integer] - The hour you want to start at in the day view
+      unless there is an entry before this time.
+      - Time must be entered in military time (13 is 1pm, 14 is 2pm, etc.)
+      - defaults to 0 (which will start at 12am current day)
+  :day_end_hour => [integer] - The hour you want to end at in the day view
+      unless there is an entry after this time.
+      - Time must be entered in military time (13 is 1pm, 14 is 2pm, etc.)
+      - defaults to 24 (which will end at 12am the next day)
 
 Example of Small Calendar
 =========================

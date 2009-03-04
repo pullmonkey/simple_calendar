@@ -1,13 +1,13 @@
-<% %>
-<% @hours.each_with_index do |hour, i| %>
-  <tr class="week_days top" id="<%= path_for_new_calendar_entry_day(i,00) %>" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i %>>
+<% -%>
+<% @hours.each_with_index do |hour, i| -%>
+  <tr class="week_days top" id="<%= path_for_new_calendar_entry_day(i + @day_start_time,00) %>" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i -%>>
    <th class="hour_header">
       <%= hour %>
     </th>
     <td class="link_to_new"></td>
   </tr>
-  <tr class="week_days bottom" id="<%= path_for_new_calendar_entry_day(i,30) %>" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i %>>
+  <tr class="week_days bottom" id="<%= path_for_new_calendar_entry_day(i + @day_start_time,30) %>" <%= "style=\"height: 29pt\"" if request.env["HTTP_USER_AGENT"] =~ /msie/i -%>>
     <th class="hour_header">&nbsp;</th>
     <td class="link_to_new"></td>
   </tr>
-<% end %>
+<% end -%>

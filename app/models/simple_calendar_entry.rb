@@ -1,4 +1,5 @@
 class SimpleCalendarEntry < ActiveRecord::Base
+  include DayViewStartTimeData
   acts_as_taggable
 
   belongs_to :simple_calendar
@@ -91,7 +92,7 @@ class SimpleCalendarEntry < ActiveRecord::Base
   end
 
   def top
-    self.start_time.hour * 60 + self.start_time.min
+    self.start_time.hour * 60 + self.start_time.min - day_start_time * 60
   end
 
   def height
