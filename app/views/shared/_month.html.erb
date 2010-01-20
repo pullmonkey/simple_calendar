@@ -1,9 +1,9 @@
 <% -%>
-<script language="javascript">
+<script type="text/javascript" language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
-    if(<%= @admin %>) {
+    if(<%= can_create? %>) {
       $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'div.new_entry', toTop: true});
     }
     $j('#calendar_modal_3').jqm({ajax: '@id', trigger: 'input.wiki_entries_button', toTop: true});

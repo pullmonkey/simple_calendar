@@ -5,15 +5,19 @@
       <th colspan="7">
         <b class="left">
           <%= link_to_remote "<",  :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
-                                             :month => @month - 1, :year => @year} %>
+                                             :month => @month - 1, :year => @year},
+                                   :html => {:title => "prev month"} %>
           <%= link_to_remote "<<", :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
-                                             :month => @month, :year => @year - 1} %>
+                                             :month => @month, :year => @year - 1},
+                                   :html => {:title => "prev year"} %>
         </b>
         <b class="right">
           <%= link_to_remote ">>", :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date',
-                                             :month => @month, :year => @year + 1} %>
+                                             :month => @month, :year => @year + 1},
+                                   :html => {:title => "next year"} %>
           <%= link_to_remote ">",  :url  => {:controller => 'simple_calendar', :action => 'small_refresh_date', 
-                                             :month => @month + 1, :year => @year} %>
+                                             :month => @month + 1, :year => @year},
+                                   :html => {:title => "next month"} %>
         </b>
         <%= @date.strftime("%B %Y") %>
       </th>

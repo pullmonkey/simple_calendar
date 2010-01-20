@@ -32,9 +32,9 @@ This should create 2 migration files:
 Dependencies
 ============
 This plugin only has 1 dependency which is the acts_as_taggable_on_steroids 
-plugin. This plugin is only needed if you want to be able to make your enties
+plugin. This plugin is only needed if you want to be able to make your entries
 taggable. To install this plugin do:
-  ruby script/plugin install http://svn.viney.net.nz/things/rails/plugins/acts_as_taggable_on_steroids
+  ./script/plugin install http://github.com/jviney/acts_as_taggable_on_steroids.git
 
 Environment.rb
 ==============
@@ -64,6 +64,11 @@ won't need to pass them at all.
 The additional options you can pass to simple_calendar are:
   :admin => true/false - This decides whether you can edit the calendar or not
                        - defaults to false
+  :writable => true/false - This decides whether a user can add and remove their
+      own items or not. Must pass a :user for this to work properly.
+                          - defaults to false
+  :user => "username" - This sets the user that is making changes. A user with 
+      :writable set to true can only edit or remove the entries that user created.
   :prefix => "/test" - This is whatever the prefix for you site is
                      - defaults to ""
   :return_to => "/projects/test_project" - This is the path in front of simple_calendar/
@@ -82,6 +87,8 @@ The additional options you can pass to simple_calendar are:
   :taggable => true/false - Pass true to enable taggable entries. When true you
       will be able to tag an entry and filter all entries depending on the tag.
                           - defaults to false
+  :serial_only => true/false - Pass true to force entries to only be added 
+      serialy (no overlapping entries).
   :entry_link_length => [integer] - The entry name will truncate at this value
       in the month view
       - defaults to 15
@@ -128,4 +135,4 @@ The additional options you can pass to simple_calendar_upcoming_events are:
       does not include the length of the date.
       - defaults to 100 so pretty much everything
 
-Copyright (c) 2008 [Sean Naegle], released under the MIT license
+Copyright (c) 2008-2010 [Sean Naegle], released under the MIT license

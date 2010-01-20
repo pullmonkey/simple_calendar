@@ -8,8 +8,17 @@
   <%= f.text_area :detail, :rows => 5 %>
   <%= f.datetime_select :start_time, {:minute_step => 15} %>
   <%= f.datetime_select :end_time, {:minute_step => 15} %>
-  <%= f.text_field :tag_list if session[:simple_calendar_taggable] %>
-  <%= "<p class=\"form_example\">(comma delimited)</p><br />" if session[:simple_calendar_taggable] %>
+  <% if session[:simple_calendar_taggable] -%>
+    <%= f.text_field :tag_list %>
+    <%= "<p class=\"form_example\">(comma delimited)</p>" %>
+    <% tag_cloud @tags, %w(size1 size2 size3 size4) do |tag, css_class| %>
+      <span class="<%= css_class -%>"><%= tag.name -%></span>,
+    <% end -%>
+    <br />
+  <% end -%>
   <%= f.hidden_field :mode, :value => @mode %>
+  <%= f.hidden_field :serial_only, :value => session[:simple_calendar][:serial_only] %>
+  <%= f.hidden_field :created_by, :value => @username if controller.action_name == "new" %>
+  <%= f.hidden_field :updated_by, :value => @username %>
   <%= submit_tag "Submit" %>
 <% end -%>

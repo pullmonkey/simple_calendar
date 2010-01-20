@@ -79,10 +79,10 @@ div.table_border {
 }
 
 div#inner_calendar {
-  width: 90%;
+  width: 98%;
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }
 
 table.cal, table.day_cal {

@@ -16,6 +16,7 @@
 <div id='view_entry' class="jqmPopup">
 <a href="" class="jqmClose"><em>Close</em></a>
 <h1><%= @simple_calendar_entry.name %></h1><br />
+<p class="left-align"><b>Created by:</b> <%= @simple_calendar_entry.created_by %></p>
 <p class="left-align"><b>Description:</b> <%= @simple_calendar_entry.detail %></p>
 <p class="left-align"><b>Details:</b> <%= @simple_calendar_entry.date_time %></p>
 <p class="left-align"><b>Tags:</b> 
@@ -23,7 +24,7 @@
   <%= tag.name -%><%= ", " if tag != @simple_calendar_entry.tag_counts.last -%>
 <% end -%>
 </p><br />
-<% if @admin -%>
+<% if can_edit?(@simple_calendar_entry) -%>
   <p style="text-align: center;">
     <%= link_to "Edit event details", edit_simple_calendar_entry_path(@simple_calendar_entry) + "?mode=#{@mode}", {:class => 'entry_2'} %> | 
     <%= link_to "Delete event", {:action => 'delete', :id => params[:id], :mode => @mode}, {:confirm => "Are you sure you want to delete this event?", :class => 'entry_3'} %>

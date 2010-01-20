@@ -1,4 +1,5 @@
 module SimpleCalendarEntriesHelper
+  include TagsHelper
 
   def some_time(date, hour, minute)
     #Time.local(date.year, date.month, date.day, hour, minute) 

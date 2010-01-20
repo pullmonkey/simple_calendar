@@ -1,9 +1,9 @@
 <% -%>
-<script language="javascript">
+<script type="text/javascript" language="javascript">
   var $j = jQuery.noConflict();
   $j(document).ready(function() {
     $j('#calendar_modal').jqm({ajax: '@href', trigger: 'a.entry', toTop: true});
-    if(<%= @admin %>) {
+    if(<%= can_create? %>) {
       $j('#calendar_modal_2').jqm({ajax: '@id', trigger: 'tr.week_days', toTop: true});
     }
     // Close Button Highlighting. IE doesn\'t support :hover. Surprise?

@@ -41,8 +41,7 @@ module SimpleCalendarMod
         def initialize_simple_calendar(options = {})
           session[:simple_calendar] ||= {}
 
-          @admin = options[:admin] || false
-          session[:simple_calendar_admin] = @admin
+          set_editing_values(options)
 
           @prefix = options[:prefix] || session[:simple_calendar_prefix] || ""
           session[:simple_calendar_prefix] = @prefix
@@ -93,6 +92,8 @@ module SimpleCalendarMod
           @day_end_time = options[:day_end_hour] || session[:simple_calendar][:day_end_time] || 23
           @day_end_time -= 1 if options[:day_end_hour]
           session[:simple_calendar][:day_end_time] = @day_end_time
+
+          set_serial_only(options)
 
           if @layout
             render :partial => 'shared/calendar'
@@ -150,6 +151,35 @@ module SimpleCalendarMod
           @entries = @entries.find_tagged_with(@selected_tag) if not @selected_tag.blank?
           @entries.sort!{|a,b| a.start_time <=> b.start_time}
           render :partial => 'shared/upcoming_events'
+        end
+
+        def set_editing_values(options = {})
+          @admin = options[:admin] || false
+          session[:simple_calendar_admin] = @admin
+
+          @writable = options.has_key?(:writable) ? options[:writable] : false
+          @writable = session[:simple_calendar][:writable] if !options.has_key?(:writable) and session[:simple_calendar][:writable]
+          session[:simple_calendar][:writable] = @writable
+
+          @username = options[:user] || "N/A"
+          @username = session[:simple_calendar][:username] if options[:user].blank? and session[:simple_calendar][:username]
+          @username = "admin" if @admin
+          session[:simple_calendar][:username] = @username
+        end
+
+        def set_serial_only(options = {})
+          @serial_only = options.has_key?(:serial_only) ? options[:serial_only] : false
+          @serial_only = session[:simple_calendar][:serial_only] if !options.has_key?(:serial_only) and session[:simple_calendar][:serial_only]
+          session[:simple_calendar][:serial_only] = @serial_only
+        end
+
+        def can_edit?(entry)
+          return true if @admin
+          @writable and @username == entry.created_by
+        end
+
+        def can_create?
+          return true if @admin or @writable
         end
       end
     end

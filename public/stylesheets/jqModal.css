@@ -8,7 +8,7 @@
     display: none;
     
     position: fixed;
-    top: 17%;
+    top: 10%;
     left: 50%;
     
     margin-left: -215px;
@@ -18,6 +18,8 @@
     color: #333;
     border: 3px outset #800000;
     padding: 12px;
+    height: 600px;
+    overflow: auto;
 }
 
 .jqmOverlay { background-color: #000; }
@@ -104,4 +106,11 @@ div.jqmWindow p.form_example {
   color: blue;
   margin-top: -5pt;
 }
+
+/* TAGS */
+.size1 { font-size: 0.6em; }
+.size2 { font-size: 0.8em; }
+.size3 { font-size: 1.0em; }
+.size4 { font-size: 1.2em; }
+/* END TAGS */
 

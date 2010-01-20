@@ -5,14 +5,12 @@ class SimpleCalendarEntriesController < ApplicationController
   #self.template_root = File.join(File.dirname(__FILE__), '..', 'views')
 
   before_filter :set_simple_calendar_defaults
+  before_filter :can_change?, :only => [:edit, :update, :delete]
+  before_filter :can_create_new?, :only => [:new, :create]
 
   def new
     @mode = params[:mode] ? params[:mode] : "month"
     @date = params[:id].to_time.utc
-    if !@admin
-      render_calendar
-      return
-    end
     if !params[:hour].nil?
       @hour = params[:hour].to_i
       @date += @hour.hours
@@ -26,15 +24,11 @@ class SimpleCalendarEntriesController < ApplicationController
 
   def create
     @mode = params[:simple_calendar_entry][:mode]
-    if !@admin
-      render_calendar
-      return
-    end
     params[:simple_calendar_entry].delete(:mode)
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.new(params[:simple_calendar_entry])
     @simple_calendar_entry.save ? 
       flash[:notice] = "Calendar Entry Saved" : 
-      flash[:error] = "Calendar Entry Could Not Be Saved"
+      flash[:error] = "Calendar Entry Could Not Be Saved.<br/> #{@simple_calendar_entry.errors.full_messages.join('<br/>')}"
     @date = @simple_calendar_entry.start_time.to_date
     render_calendar
   end
@@ -49,10 +43,6 @@ class SimpleCalendarEntriesController < ApplicationController
     @mode = params[:mode] ? params[:mode] : "month"
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
     @date = @simple_calendar_entry.start_time.to_date
-    if !@admin
-      render_calendar
-      return
-    end
     render :partial => 'form', :layout => false
   end
 
@@ -60,13 +50,9 @@ class SimpleCalendarEntriesController < ApplicationController
     @mode = params[:simple_calendar_entry][:mode]
     params[:simple_calendar_entry].delete(:mode)
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
-    if !@admin
-      render_calendar
-      return
-    end
     @simple_calendar_entry.update_attributes(params[:simple_calendar_entry]) ? 
       flash[:notice] = "Calendar Entry Updated" : 
-      flash[:error] = "Calendar Entry Could not be Updated"
+      flash[:error] = "Calendar Entry Could not be Updated.<br/>#{@simple_calendar_entry.errors.full_messages.join('<br />')}"
     @date = @simple_calendar_entry.start_time.to_date
     render_calendar
   end
@@ -74,14 +60,10 @@ class SimpleCalendarEntriesController < ApplicationController
   def delete
     @simple_calendar_entry = @simple_calendar.simple_calendar_entries.find(params[:id])
     @mode = params[:mode] ? params[:mode] : "month"
-    if @admin
-      @confirm = "Are you sure you want to delete this entry"
-      @simple_calendar_entry.destroy ?
-        flash[:notice] = "Event Deleted" :
-        flash[:error] = "Event Could not be Deleted!"
-    else
-      flash[:error] = "You are not an admin"
-    end
+    @confirm = "Are you sure you want to delete this entry"
+    @simple_calendar_entry.destroy ?
+      flash[:notice] = "Event Deleted" :
+      flash[:error] = "Event Could not be Deleted!"
     @date = @simple_calendar_entry.start_time.to_date
     render_calendar
   end 
@@ -96,12 +78,30 @@ private
   def set_simple_calendar_defaults
     @simple_calendar = SimpleCalendar.find_or_create_by_name(session[:simple_calendar_name])
     @calendar_path = "/"
-    @calendar_path = session[:simple_calendar_prefix] if not session[:simple_calendar_prefix].empty?
-    @calendar_path = session[:simple_calendar_path] if not session[:simple_calendar_path].empty?
-    @admin = session[:simple_calendar_admin]
+    @calendar_path = session[:simple_calendar_prefix] if not session[:simple_calendar_prefix].blank?
+    @calendar_path = session[:simple_calendar_path] if not session[:simple_calendar_path].blank?
+    @admin = session[:simple_calendar_admin] || false
+    @writable = session[:simple_calendar][:writable] || false
+    @username = session[:simple_calendar][:username]
+    @tags = SimpleCalendarEntry.tag_counts if session[:simple_calendar_taggable]
   end
 
   def render_calendar
     redirect_to @calendar_path + "?mode=#{@mode}&date=#{@date}"
+  end
+
+  def can_change?
+    entry = SimpleCalendarEntry.find(params[:id])
+    unless @admin or (@writable and entry.created_by == @username)
+      flash[:error] = "You do not have the permissions to change that entry"
+      render_calendar
+    end
+  end
+
+  def can_create_new?
+    unless @admin or @writable
+      flash[:error] = "You do not have permissions to add items to the calendar"
+      render_calendar
+    end
   end
 end

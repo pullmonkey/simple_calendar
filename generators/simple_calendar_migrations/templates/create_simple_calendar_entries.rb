@@ -6,8 +6,9 @@ class <%= class_name %> < ActiveRecord::Migration
       t.column :detail,     :text
       t.column :start_time, :datetime
       t.column :end_time,   :datetime
-      t.column :created_at, :datetime
-      t.column :updated_at, :datetime
+      t.column :created_by, :string
+      t.column :updated_by, :string
+      t.timestamps
     end
   end
 

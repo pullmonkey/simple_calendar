@@ -4,8 +4,12 @@ class SimpleCalendarEntry < ActiveRecord::Base
 
   belongs_to :simple_calendar
 
-  validates_presence_of :name, :message => "^You must enter a name first"
+  attr_accessor :serial_only
+
+  validates_presence_of :name
+  validates_presence_of :start_time, :end_time, :created_by, :updated_by
   validate :end_time_after_start_time
+  validate :no_overlap 
 
   named_scope :all_by_month_and_year,
               lambda{|month, year| {
@@ -14,9 +18,13 @@ class SimpleCalendarEntry < ActiveRecord::Base
                                 Date.civil(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1)] 
               }}
 
+  named_scope :all_by_date,
+              lambda{|date| {
+                :conditions => ["start_time >= ?  and start_time <= ?", date, date + 1.day]}}
+
   named_scope :all_future_entries, {
                 :conditions => ["start_time >= ?", 
-                                Time.today]
+                                Date.today.to_time]
               }
               
   def sibling_entries(month, year)
@@ -27,9 +35,30 @@ class SimpleCalendarEntry < ActiveRecord::Base
   end
 
   def end_time_after_start_time
+    return if end_time.blank? or start_time.blank?
     if end_time < start_time
       errors.add_to_base("The start time can't be later than the end time.")
     end
+  end
+
+  def no_overlap
+    if serial_only == "true"
+      self.simple_calendar.simple_calendar_entries.all_by_date(self.start_time.to_date).each do |entry|
+        next if not self.new_record? and self.id == entry.id
+        if self.overlapping?(entry)
+          errors.add_to_base("You can not have overlapping time periods.")
+          break
+        end
+      end
+    end
+  end
+
+  def overlapping?(entry)
+    return true if entry.start_time == self.start_time or entry.end_time == self.end_time
+    return false if entry.start_time == self.end_time or entry.end_time == self.start_time
+    return true if entry.start_time.between?(self.start_time, self.end_time) or self.start_time.between?(entry.start_time, entry.end_time)
+    return true if entry.end_time.between?(self.start_time, self.end_time) or self.end_time.between?(entry.start_time, entry.end_time)
+    return false
   end
 
   def date_time
@@ -82,7 +111,7 @@ class SimpleCalendarEntry < ActiveRecord::Base
       time = self.start_time + (lcv * minute_increment).minutes
       num = []
       touching_entries.each do |entry|
-        num << entry if time.between?(entry.start_time, entry.end_time)
+        num << entry if time.between?(entry.start_time, (entry.start_time == entry.end_time ? entry.start_time + 30.minutes : entry.end_time))
       end
       max = num if (num.size > max.size)
       min = num if (num.size < min.size)
@@ -96,13 +125,14 @@ class SimpleCalendarEntry < ActiveRecord::Base
   end
 
   def height
+    return 30 if self.total_time_minutes == 0
     self.total_time_minutes - 2
   end
 
   def width(day, month, year)
     entries = sibling_entries(month, year)[Date.civil(year, month, day)]
     min, max = self.all_touching_max_and_min(entries)
-    (90 / max.size)
+    (90 / (max.size == 0 ? 1 : max.size))
   end
 
   def left(day, month, year)
@@ -115,7 +145,7 @@ class SimpleCalendarEntry < ActiveRecord::Base
     logger.error "MAX ARRAY: " + max.map{|e| [e.id, e.start_time]}.join(", ") + "\n\n"
     index = max.index(self)
     left += self.width(day, month, year) * index if index
-    left += index
+    left += index if index
     return left
   end
 
