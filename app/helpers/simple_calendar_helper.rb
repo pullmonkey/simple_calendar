@@ -4,8 +4,9 @@ module SimpleCalendarHelper
   def home_path
     return session[:simple_calendar_path] if not session[:simple_calendar_path].empty?
     return session[:simple_calendar_prefix] if not session[:simple_calendar_prefix].empty?
+    return ""
     #return "http://#{request.env['HTTP_HOST']}"
-    return "#{request.protocol}#{request.host_with_port}#{request.relative_url_root}"
+    #return "#{request.protocol}#{request.host_with_port}#{request.relative_url_root}"
   end
 
   def path_for_new_calendar_entry_day(hour, min)
